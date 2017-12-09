@@ -53,9 +53,7 @@ namespace PerkyTemp.Models
 
         public List<PastSession> GetSessions()
         {
-            List<PastSession> s = conn.Table<PastSession>().ToList();
-            s.Add(PastSession.FromFields("00", new DateTime(1995, 11, 13, 1, 2, 3), new DateTime(1995, 11, 13, 4, 5, 6), 5, 9));
-            return s;
+            return conn.Table<PastSession>().ToList();
         }
 
         public int SaveSession(PastSession session)

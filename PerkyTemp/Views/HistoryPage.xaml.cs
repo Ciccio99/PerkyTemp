@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PerkyTemp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,12 @@ namespace PerkyTemp.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class HistoryPage : ContentPage
 	{
-		public HistoryPage ()
+        //internal HistoryViewModel ViewModel { get; private set; }
+
+        public HistoryPage ()
 		{
+            //ViewModel = HistoryViewModel.GetInstance();
 			InitializeComponent ();
 		}
-	}
+    }
 }

@@ -11,7 +11,7 @@
     
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Past Sessions:" FontSize="Large" />
+            <Label Text="Past Sessions:" FontSize="Large" FontAttributes="Bold" />
 
             <Grid>
                 <Grid.ColumnDefinitions>

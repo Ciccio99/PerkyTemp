@@ -11,7 +11,7 @@
     
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Settings:" FontSize="Large" />
+            <Label Text="Settings:" FontSize="Large" FontAttributes="Bold" />
 
             <Label Text="Send notification when there are" FontSize="Large" />
             <Entry FontSize="Large" />

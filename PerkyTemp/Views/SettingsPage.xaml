@@ -11,11 +11,11 @@
     
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Settings:" />
+            <Label Text="Settings:" FontSize="Large" />
 
-            <Label Text="Send notification when there are" />
-            <Entry />
-            <Label Text="minutes left of cooling" />
+            <Label Text="Send notification when there are" FontSize="Large" />
+            <Entry FontSize="Large" />
+            <Label Text="minutes left of cooling" FontSize="Large" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

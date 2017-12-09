@@ -11,7 +11,7 @@
     
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Past Sessions:" />
+            <Label Text="Past Sessions:" FontSize="Large" />
 
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -25,11 +25,11 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <Label Text="ID" Grid.Row="0" Grid.Column="0" />
-                <Label Text="Start Time" Grid.Row="0" Grid.Column="1" />
-                <Label Text="Duration" Grid.Row="0" Grid.Column="2" />
-                <Label Text="Start Temp" Grid.Row="0" Grid.Column="3" />
-                <Label Text="Final Temp" Grid.Row="0" Grid.Column="4" />
+                <Label Text="ID" Grid.Row="0" Grid.Column="0" FontSize="Medium" />
+                <Label Text="Start Time" Grid.Row="0" Grid.Column="1" FontSize="Medium" />
+                <Label Text="Duration" Grid.Row="0" Grid.Column="2" FontSize="Medium" />
+                <Label Text="Start Temp" Grid.Row="0" Grid.Column="3" FontSize="Medium" />
+                <Label Text="Final Temp" Grid.Row="0" Grid.Column="4" FontSize="Medium" />
             </Grid>
 
             <ListView ItemsSource="{Binding Sessions}">
@@ -48,11 +48,11 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
 
-                                <Label Text="{Binding ID}" Grid.Row="0" Grid.Column="0" />
-                                <Label Text="{Binding Date}" Grid.Row="0" Grid.Column="1" />
-                                <Label Text="{Binding DurationString}" Grid.Row="0" Grid.Column="2" />
-                                <Label Text="{Binding StartTemp}" Grid.Row="0" Grid.Column="3" />
-                                <Label Text="{Binding FinalTemp}" Grid.Row="0" Grid.Column="4" />
+                                <Label Text="{Binding ID}" Grid.Row="0" Grid.Column="0" FontSize="Medium" />
+                                <Label Text="{Binding Date}" Grid.Row="0" Grid.Column="1" FontSize="Medium" />
+                                <Label Text="{Binding DurationString}" Grid.Row="0" Grid.Column="2" FontSize="Medium" />
+                                <Label Text="{Binding StartTemp}" Grid.Row="0" Grid.Column="3" FontSize="Medium" />
+                                <Label Text="{Binding FinalTemp}" Grid.Row="0" Grid.Column="4" FontSize="Medium" />
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

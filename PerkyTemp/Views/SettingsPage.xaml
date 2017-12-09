@@ -1,11 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:PerkyTemp.Views;assembly=PerkyTemp"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              x:Class="PerkyTemp.Views.SettingsPage"
              Title="Settings">
+    <ContentPage.BindingContext>
+        <views:SettingsViewModel />
+    </ContentPage.BindingContext>
+    
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Settings go here" />
+            <Label Text="Settings:" />
+
+            <Label Text="Send notification when there are" />
+            <Entry />
+            <Label Text="minutes left of cooling" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

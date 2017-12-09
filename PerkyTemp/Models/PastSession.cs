@@ -24,7 +24,7 @@ namespace PerkyTemp.Models
         {
             get
             {
-                return StartDateTimestamp.ToString();
+                return (new DateTime(1970, 1, 1) + TimeSpan.FromSeconds(StartDateTimestamp)).ToString();
             }
         }
 

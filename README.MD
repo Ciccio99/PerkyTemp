@@ -40,7 +40,7 @@ that allows them to turn temperature tracking on and off, as well as see the pre
 # MVVM Structure
 
 ### View
- 
+  
 - Main Window includes: Start/Stop Recording, current temperature, cooling time left, Maybe outside weather temp
 - Settings window: Final temperature timeout warning/notification, 
     interval notifications (warning how much time is left at each interval), turn on/off native notifications, 

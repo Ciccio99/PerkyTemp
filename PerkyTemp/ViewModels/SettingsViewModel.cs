@@ -1,19 +1,15 @@
-﻿using PerkyTemp.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PerkyTemp.Views
+namespace PerkyTemp.ViewModels
 {
-    class HistoryViewModel : INotifyPropertyChanged
+    class SettingsViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public List<PastSession> Sessions { get => PerkyTempDatabase.Database.GetSessions(); }
 
         protected void OnPropertyChanged(string propertyName)
         {

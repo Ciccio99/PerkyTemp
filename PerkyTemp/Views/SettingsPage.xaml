@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:views="clr-namespace:PerkyTemp.Views;assembly=PerkyTemp"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:ViewModels="clr-namespace:PerkyTemp.ViewModels;assembly=PerkyTemp"
              x:Class="PerkyTemp.Views.SettingsPage"
              Title="Settings">
     <ContentPage.BindingContext>
-        <views:SettingsViewModel />
+        <ViewModels:SettingsViewModel />
     </ContentPage.BindingContext>
     
     <ContentPage.Content>

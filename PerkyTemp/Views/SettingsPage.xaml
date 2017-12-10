@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ViewModels="clr-namespace:PerkyTemp.ViewModels;assembly=PerkyTemp"
+             x:Class="PerkyTemp.Views.SettingsPage"
+             Title="Settings">
+    <ContentPage.BindingContext>
+        <ViewModels:SettingsViewModel />
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Settings:" FontSize="Large" FontAttributes="Bold" />
+
+            <Label Text="Send notification when there are" FontSize="Large" />
+            <Entry FontSize="Large" />
+            <Label Text="minutes left of cooling" FontSize="Large" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

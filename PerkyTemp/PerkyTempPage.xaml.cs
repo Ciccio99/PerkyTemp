@@ -2,7 +2,7 @@
 
 namespace PerkyTemp
 {
-    public partial class PerkyTempPage : ContentPage
+    public partial class PerkyTempPage : TabbedPage
     {
         public PerkyTempPage()
         {

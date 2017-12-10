@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ViewModels="clr-namespace:PerkyTemp.ViewModels;assembly=PerkyTemp"
              x:Class="PerkyTemp.Views.CurrentSessionPage"
              Title="Current Session">
-	<StackLayout>
-        <Label Text="This is CurrentSessionPage" />
-    </StackLayout>
+    <ContentPage.BindingContext>
+        <ViewModels:CurrentSessionViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+            <StackLayout>
+                <Label Text="This is CurrentSessionPage" />
+                <Label Text="{Binding Log}" />
+            </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

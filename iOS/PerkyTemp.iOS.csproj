@@ -114,15 +114,6 @@
     <Reference Include="nexus.core">
       <HintPath>..\packages\nexus.core.0.29.4\lib\portable45-net45+win8\nexus.core.dll</HintPath>
     </Reference>
-    <Reference Include="ble.net">
-      <HintPath>..\packages\ble.net.0.12.14\lib\portable45-net45+win8\ble.net.dll</HintPath>
-    </Reference>
-    <Reference Include="Plugin.BLE.Abstractions">
-      <HintPath>..\packages\Plugin.BLE.1.3.0\lib\Xamarin.iOS10\Plugin.BLE.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Plugin.BLE">
-      <HintPath>..\packages\Plugin.BLE.1.3.0\lib\Xamarin.iOS10\Plugin.BLE.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PerkyTemp\PerkyTemp.csproj">

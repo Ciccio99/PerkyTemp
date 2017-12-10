@@ -1,11 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ViewModels="clr-namespace:PerkyTemp.ViewModels;assembly=PerkyTemp"
              x:Class="PerkyTemp.Views.HistoryPage"
              Title="History">
+    <ContentPage.BindingContext>
+        <ViewModels:HistoryViewModel />
+    </ContentPage.BindingContext>
+    
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="History history history" />
+            <Label Text="Past Sessions:" FontSize="Large" FontAttributes="Bold" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Label Text="ID" Grid.Row="0" Grid.Column="0" FontSize="Medium" />
+                <Label Text="Start Time" Grid.Row="0" Grid.Column="1" FontSize="Medium" />
+                <Label Text="Duration" Grid.Row="0" Grid.Column="2" FontSize="Medium" />
+                <Label Text="Start Temp" Grid.Row="0" Grid.Column="3" FontSize="Medium" />
+                <Label Text="Final Temp" Grid.Row="0" Grid.Column="4" FontSize="Medium" />
+            </Grid>
+
+            <ListView ItemsSource="{Binding Sessions}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <Label Text="{Binding ID}" Grid.Row="0" Grid.Column="0" FontSize="Medium" />
+                                <Label Text="{Binding Date}" Grid.Row="0" Grid.Column="1" FontSize="Medium" />
+                                <Label Text="{Binding DurationString}" Grid.Row="0" Grid.Column="2" FontSize="Medium" />
+                                <Label Text="{Binding StartTemp}" Grid.Row="0" Grid.Column="3" FontSize="Medium" />
+                                <Label Text="{Binding FinalTemp}" Grid.Row="0" Grid.Column="4" FontSize="Medium" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

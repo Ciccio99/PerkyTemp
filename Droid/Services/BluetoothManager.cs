@@ -8,10 +8,6 @@ namespace PerkyTemp.Droid.Services
 {
     public class BluetoothManager : IBluetoothManager
     {
-        public BluetoothManager()
-        {
-        }
-
         public string Test()
         {
             return "Meow from Android";

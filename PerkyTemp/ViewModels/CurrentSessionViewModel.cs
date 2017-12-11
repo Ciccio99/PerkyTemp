@@ -8,6 +8,9 @@ namespace PerkyTemp.ViewModels {
     public class CurrentSessionViewModel : INotifyPropertyChanged {
         private bool isSessionStarted = false;
         private DateTime whenSessionStarted;
+        private IBluetoothManager _bluetoothManager;
+        private INotificationManager _notificationManager;
+        private string _currentSessionNotificationID;
 
         public string CurrentTemp
         {
@@ -37,11 +40,11 @@ namespace PerkyTemp.ViewModels {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private IBluetoothManager _bluetoothManager;
 
         public CurrentSessionViewModel()
         {
             _bluetoothManager = DependencyService.Get<IBluetoothManager> ();
+            _notificationManager = DependencyService.Get<INotificationManager> ();
             Log = _bluetoothManager.Test ();
             TemperatureSensor.Instance.OnTemperatureUpdatedEvent += OnTemperatureChanged;
         }
@@ -64,6 +67,7 @@ namespace PerkyTemp.ViewModels {
         {
             whenSessionStarted = DateTime.Now;
             isSessionStarted = true;
+            _currentSessionNotificationID = _notificationManager.ScheduleNotification (10, false, "Session Started", "This message informs you that the current session has started.");
         }
 
         private void StopCurrentSession()
@@ -71,6 +75,8 @@ namespace PerkyTemp.ViewModels {
             // TODO: Start temp and final temp
             PerkyTempDatabase.Database.SaveSession(PastSession.FromFields(whenSessionStarted, DateTime.Now, 5, 6));
             isSessionStarted = false;
+            if (_currentSessionNotificationID != null)
+                _notificationManager.RemovePendingNotification (_currentSessionNotificationID);
         }
 
         private void OnTemperatureChanged () {

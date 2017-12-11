@@ -64,6 +64,7 @@
     <Compile Include="Models\TemperatureSensor.cs" />
     <Compile Include="Utilities\Utilities.cs" />
     <Compile Include="Utilities\Constants.cs" />
+    <Compile Include="Interfaces\INotificationManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Plugin.BLE">

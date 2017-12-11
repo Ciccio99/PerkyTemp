@@ -35,16 +35,15 @@ namespace PerkyTemp.Models
         {
             conn = new SQLiteConnection(path);
             conn.CreateTable<PastSession>();
+            conn.CreateTable<SettingsModel>();
 
             // Insert some dummy data
             SaveSession(PastSession.FromFields(
-                "00:11:22:33",
                 new DateTime(2017, 11, 13, 12, 34, 00),
                 new DateTime(2017, 11, 13, 12, 45, 00),
                 58.7,
                 72.1));
             SaveSession(PastSession.FromFields(
-                "00:11:22:33",
                 new DateTime(2017, 11, 16, 4, 00, 00),
                 new DateTime(2017, 11, 16, 5, 45, 00),
                 42.9,
@@ -66,6 +65,20 @@ namespace PerkyTemp.Models
             {
                 return conn.Insert(session);
             }
+        }
+
+        public SettingsModel GetSettings()
+        {
+            if (conn.Find<SettingsModel>(SettingsModel.DEFAULT_ID) == null)
+            {
+                conn.Insert(SettingsModel.NewSettingsModel());
+            }
+            return conn.Get<SettingsModel>(SettingsModel.DEFAULT_ID);
+        }
+
+        public void SaveSettings(SettingsModel settings)
+        {
+            conn.InsertOrReplace(settings);
         }
     }
 }

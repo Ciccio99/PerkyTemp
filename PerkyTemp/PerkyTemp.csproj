@@ -42,6 +42,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\PerkyTempDatabase.cs" />
+    <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="PerkyTempPage.xaml.cs">
       <DependentUpon>PerkyTempPage.xaml</DependentUpon>
     </Compile>

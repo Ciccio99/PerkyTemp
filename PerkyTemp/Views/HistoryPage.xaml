@@ -10,6 +10,9 @@
     
     <ContentPage.Content>
         <StackLayout>
+            <!-- Padding for iOS-->
+            <Label Text="" />
+
             <Label Text="Past Sessions:" FontSize="Large" FontAttributes="Bold" />
 
             <Grid>

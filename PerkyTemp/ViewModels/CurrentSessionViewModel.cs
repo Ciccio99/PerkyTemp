@@ -11,17 +11,32 @@ namespace PerkyTemp.ViewModels {
         private IBluetoothManager _bluetoothManager;
         private INotificationManager _notificationManager;
         private string _currentSessionNotificationID;
+        private bool _isFahrenheit;
 
         public string CurrentTemp
         {
-            get => TemperatureSensor.Instance.UUID != null ? 
-                                    TemperatureSensor.Instance.Temperature.ToString () :
-                                    "Scanning...";
+            get {
+                string temp;
+                if (_isFahrenheit)
+                    temp = Utilities.Utilities.CelsiusToFahrenheit (TemperatureSensor.Instance.Temperature).ToString ("##.##");
+                else
+                    temp = TemperatureSensor.Instance.Temperature.ToString ();
+                
+                return TemperatureSensor.Instance.UUID != null ? temp : "Scanning...";
+            }
         }
 
         public string ButtonText
         {
             get => isSessionStarted ? "Stop Session" : "Start Session";
+        }
+
+        public string ConvertText {
+            get => TemperatureSensor.Instance.UUID != null ? (_isFahrenheit ? "°F" : "°C") : "";
+        }
+
+        public string OppositeConvertText {
+            get => _isFahrenheit ? "°C" : "°F";
         }
 
         public string Status
@@ -79,8 +94,16 @@ namespace PerkyTemp.ViewModels {
                 _notificationManager.RemovePendingNotification (_currentSessionNotificationID);
         }
 
+        public void ToggleTemperatureConversion () {
+            _isFahrenheit = !_isFahrenheit;
+            OnTemperatureChanged ();
+        }
+
         private void OnTemperatureChanged () {
             OnPropertyChanged (nameof (CurrentTemp));
+            OnPropertyChanged (nameof (ConvertText) );
         }
+
+
     }
 }

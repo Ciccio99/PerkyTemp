@@ -9,6 +9,8 @@ namespace PerkyTemp.Utilities {
         public const int GATT_BATTERY = 0x180f;
 
         // Timer Consts
+        public const int SCAN_TIME_DURATION = 30;
         public const int TIME_UNTIL_NEXT_SCAN = 15;
+
     }
 }

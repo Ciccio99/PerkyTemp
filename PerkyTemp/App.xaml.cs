@@ -1,14 +1,14 @@
 ﻿using Xamarin.Forms;
 
-namespace PerkyTemp
-{
-    public partial class App : Application
-    {
-        public App()
-        {
-            InitializeComponent();
+namespace PerkyTemp {
+    public partial class App : Application {
+        public App () {
+            InitializeComponent ();
 
-            MainPage = new PerkyTempPage();
+            MainPage = new PerkyTempPage ();
+#if __IOS__
+
+#endif
         }
 
         protected override void OnStart()

@@ -10,8 +10,7 @@ using PerkyTemp.Utilities;
 using System.Linq;
 using System.Text.RegularExpressions;
 using PerkyTemp.Models;
-
-// https://github.com/xamarin/mobile-samples/blob/master/BluetoothLEExplorer/BluetoothLEExplorer.iOS/BluetoothLEManager.cs
+using UIKit;
 
 [assembly: Dependency (typeof (PerkyTemp.iOS.Services.BluetoothManager))]
 namespace PerkyTemp.iOS.Services {
@@ -24,7 +23,6 @@ namespace PerkyTemp.iOS.Services {
 
         public BluetoothManager () {
             _managerDel = new PerkyCBCentralManagerDelegate ();
-            //_centralManager = new CBCentralManager (_managerDel, null);
             _centralManager = new CBCentralManager ();
             _centralManager.UpdatedState += OnUpdatedState;
             _centralManager.DiscoveredPeripheral += OnDiscoveredPeripheral;
@@ -35,7 +33,11 @@ namespace PerkyTemp.iOS.Services {
             return "Meow";
         }
 
-        // Event methods
+        /// <summary>
+        /// On peripheral connected.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
         public void OnPeripheralConnected (Object sender, CBPeripheralEventArgs e) {
             _activePeripheral = e.Peripheral;
             Debug.WriteLine ("Connected to " + _activePeripheral.Name);
@@ -53,8 +55,9 @@ namespace PerkyTemp.iOS.Services {
                 if (!_centralManager.IsScanning)
                     ScanForTemperatureSensor ();
             } else {
-                // TODO: pop up notification if not bluetooth
-                Console.WriteLine ("Bluetooth is not available!");
+                var okAlertController = UIAlertController.Create ("Bluetooth is off", "Please activate bluetooth to receive updates from your vest's temperature sensor.", UIAlertControllerStyle.Alert);
+                okAlertController.AddAction (UIAlertAction.Create ("Understood", UIAlertActionStyle.Default, null));
+                UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController (okAlertController, true, () => { });
             }
         }
 
@@ -119,6 +122,7 @@ namespace PerkyTemp.iOS.Services {
             tempSensor.UUID = peripheral.Identifier.ToString ();
 
             Debug.WriteLine ("Temperature: {0}", tempSensor.Temperature);
+
             InitTimerNextScan ();
         }
 

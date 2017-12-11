@@ -9,9 +9,12 @@
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
-            <StackLayout>
-                <Label Text="This is CurrentSessionPage" />
-                <Label Text="{Binding Log}" />
-            </StackLayout>
+        <StackLayout>
+            <!-- Padding for iOS-->
+            <Label Text="" />
+
+            <Label Text="This is CurrentSessionPage" />
+            <Label Text="{Binding Log}" />
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

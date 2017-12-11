@@ -10,11 +10,24 @@
     
     <ContentPage.Content>
         <StackLayout>
+            <!-- Padding for iOS-->
+            <Label Text="" />
+
             <Label Text="Settings:" FontSize="Large" FontAttributes="Bold" />
 
-            <Label Text="Send notification when there are" FontSize="Large" />
-            <Entry FontSize="Large" />
-            <Label Text="minutes left of cooling" FontSize="Large" />
+            <Label Text="Send notification when the remaining cooling time is:" FontSize="Large" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Entry FontSize="Large" Grid.Row="0" Grid.Column="0" Text="{Binding NotificationTime, Mode=TwoWay}" Keyboard="Numeric" />
+                <Label Text="minutes" FontSize="Large" Grid.Row="0" Grid.Column="1" />
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

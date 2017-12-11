@@ -9,9 +9,9 @@ namespace PerkyTemp.ViewModels {
         private bool isSessionStarted = false;
         private DateTime whenSessionStarted;
 
-        public double CurrentTemp
+        public float CurrentTemp
         {
-            get => 12.34;
+            get => TemperatureSensor.Instance.Temperature;
         }
 
         public string ButtonText
@@ -41,6 +41,7 @@ namespace PerkyTemp.ViewModels {
         {
             _bluetoothManager = DependencyService.Get<IBluetoothManager> ();
             Log = _bluetoothManager.Test ();
+            TemperatureSensor.Instance.OnTemperatureUpdatedEvent += OnTemperatureChanged;
         }
 
         public void StartOrStopCurrentSession()
@@ -68,6 +69,10 @@ namespace PerkyTemp.ViewModels {
             // TODO: Start temp and final temp
             PerkyTempDatabase.Database.SaveSession(PastSession.FromFields(whenSessionStarted, DateTime.Now, 5, 6));
             isSessionStarted = false;
+        }
+
+        private void OnTemperatureChanged () {
+            OnPropertyChanged ("CurrentTemp");
         }
     }
 }

@@ -14,13 +14,18 @@ namespace PerkyTemp.Models {
         }
 
         public string UUID { get; set;}
-        public float Temperature {set {
-                Temperature = value;
+
+        public float Temperature {
+            get => _temperature;
+            set {
+                _temperature = value;
                 OnTemperatureUpdatedEvent?.Invoke ();
             } 
         }
 
-       
+
+
+        private float _temperature;
 
         private static TemperatureSensor instance;
 

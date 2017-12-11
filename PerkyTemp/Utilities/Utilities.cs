@@ -9,13 +9,13 @@ namespace PerkyTemp.Utilities {
             return (temp * 9f / 5f) + 32f;
         }
 
-        public static float HexStringTempToFloatTemp (string hexString) {
-            var charHexArray = StringHexToCharHexArray (hexString);
-            var flippedCharArr = FlipCharArray (charHexArray);
-            var temperature = ExtractTemperatureFromChars (flippedCharArr);
+        //public static float HexStringTempToFloatTemp (string hexString) {
+        //    var charHexArray = StringHexToCharHexArray (hexString);
+        //    var flippedCharArr = FlipCharArray (charHexArray);
+        //    var temperature = ExtractTemperatureFromChars (flippedCharArr);
 
-            return temperature;
-        }
+        //    return temperature;
+        //}
 
         public static float StringHexToTemperature (string hexInput) {
             // Clean input

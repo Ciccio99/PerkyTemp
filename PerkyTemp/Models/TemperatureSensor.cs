@@ -4,9 +4,6 @@
 using System;
 namespace PerkyTemp.Models {
     public class TemperatureSensor {
-        
-        public static TemperatureSensor instance;
-        public byte[] UUID { get; set;}
 
         public static TemperatureSensor Instance {
             get {
@@ -15,6 +12,25 @@ namespace PerkyTemp.Models {
                 return instance;
             }
         }
+
+        public string UUID { get; set;}
+        public float Temperature {set {
+                Temperature = value;
+                OnTemperatureUpdatedEvent?.Invoke ();
+            } 
+        }
+
+       
+
+        private static TemperatureSensor instance;
+
+        private TemperatureSensor () {}
+
+        public delegate void OnTemperatureUpdated();
+
+        public event OnTemperatureUpdated OnTemperatureUpdatedEvent;
+
+
 
     }
 }

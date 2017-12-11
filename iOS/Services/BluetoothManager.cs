@@ -7,6 +7,9 @@ using System.Diagnostics;
 using System.Timers;
 using Foundation;
 using PerkyTemp.Utilities;
+using System.Linq;
+using System.Text.RegularExpressions;
+using PerkyTemp.Models;
 
 // https://github.com/xamarin/mobile-samples/blob/master/BluetoothLEExplorer/BluetoothLEExplorer.iOS/BluetoothLEManager.cs
 
@@ -77,35 +80,43 @@ namespace PerkyTemp.iOS.Services {
         private void OnDiscoveredPeripheral (Object sender, CBDiscoveredPeripheralEventArgs e) {
             var peripheral = e.Peripheral;
             Debug.WriteLine ("Discovered {0}, data {1}, RSSI {2}", peripheral.Identifier, e.AdvertisementData, e.RSSI);
-            var serviceData = e.AdvertisementData["kCBAdvDataServiceData"];
-            var serviceDataDict = (NSDictionary)serviceData;
-            if (peripheral.Name == "8735ED6D") {
-                foreach (var data in serviceDataDict) {
-                    Debug.WriteLine ("service data: {0}", data);
-                }
 
+            // Get advertised data and convert to dict
+            var serviceDataDict = (NSDictionary) e.AdvertisementData[CBAdvertisement.DataServiceDataKey];
+            // Get keys becase keys are NSobjects and are weird to decipher, if no keys then null
+            var serviceDataKeys = serviceDataDict?.Keys;
+
+            if (serviceDataKeys != null && 
+                serviceDataKeys.Length == 2 && 
+                serviceDataKeys[0].Description == Constants.HEALTH_THERMOMETER && 
+                serviceDataKeys[1].Description == Constants.BATTERY) {
+
+                var temperature = serviceDataDict[serviceDataKeys[0]].Description;
+                temperature = Regex.Replace (temperature, "[<>]", "");
+                var battery = serviceDataDict[serviceDataKeys[1]].Description;
+                battery = Regex.Replace (battery, "[<>]", "");
+
+                Debug.WriteLine ("service data: {0}", temperature);
+                Debug.WriteLine ("service data: {0}", battery);
+                // Stop the scan once found
+                _centralManager.StopScan ();
+                _SetActivePeripheral (peripheral, temperature);
             }
-            //if (keys.Length == 2 && keys[0].ToString () == Constants.HEALTH_KEY && keys[1].ToString () == Constants.BATTERY_KEY) {
-            //    Debug.WriteLine ("Found \"{0}\"... Stopping Scan for Devices", peripheral.Name);
-            //    // Stop Scanning
-            //    _centralManager.StopScan ();
-            //    // Connect that Peripheral
-            //    //_centralManager.ConnectPeripheral (peripheral);
-            //    _SetActivePeripheral (peripheral);
-            //}
         }
 
         private void OnFailedToConnectToPeripheral (Object e, CBPeripheralErrorEventArgs args) {
             Debug.WriteLine ("Failed to connect to {0} because {1} ", args.Peripheral.Identifier, args.Error.ToString ());
         }
 
-        private void _SetActivePeripheral (CBPeripheral peripheral) {
+        private void _SetActivePeripheral (CBPeripheral peripheral, string temperature) {
             Debug.WriteLine ("Setting active peripheral... " + peripheral.Identifier);
             _activePeripheral = peripheral;
-            _activePeripheral.Delegate = new PerkyPeripheralDelegate ();
-            _activePeripheral.DiscoverServices ();
-            Debug.WriteLine ("Peripheral state: " +_activePeripheral.State.ToString ());
-            Debug.WriteLine ("Peripheral GUID: " + _activePeripheral.Identifier.GetBytes ().Length);
+
+            var tempSensor = TemperatureSensor.Instance;
+            tempSensor.Temperature = Utilities.Utilities.StringHexToTemperature (temperature);
+            tempSensor.UUID = peripheral.Identifier.ToString ();
+
+            Debug.WriteLine ("Temperature: {0}", tempSensor.Temperature);
         }
     }
 }

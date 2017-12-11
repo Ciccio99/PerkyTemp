@@ -30,7 +30,7 @@ namespace PerkyTemp.Models
         {
             get
             {
-                return TimeSpan.FromSeconds(FinalDateTimestamp - StartDateTimestamp).TotalMinutes + " minutes";
+                return Math.Round(TimeSpan.FromSeconds(FinalDateTimestamp - StartDateTimestamp).TotalMinutes, 2) + " minutes";
             }
         }
 

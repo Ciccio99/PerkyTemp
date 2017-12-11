@@ -15,9 +15,19 @@ namespace PerkyTemp.ViewModels
 
         public List<PastSession> Sessions { get => PerkyTempDatabase.Database.GetSessions(); }
 
+        public HistoryViewModel()
+        {
+            PerkyTempDatabase.Database.AddDatabaseChangeListener(OnDatabaseUpdated);
+        }
+
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void OnDatabaseUpdated()
+        {
+            OnPropertyChanged(nameof(Sessions));
         }
     }
 }

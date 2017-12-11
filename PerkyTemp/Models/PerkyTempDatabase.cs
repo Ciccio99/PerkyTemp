@@ -31,6 +31,9 @@ namespace PerkyTemp.Models
         
         private SQLiteConnection conn;
 
+        public delegate void DatabaseChange();
+        public event DatabaseChange DatabaseChangeListeners;
+
         private PerkyTempDatabase(string path)
         {
             conn = new SQLiteConnection(path);
@@ -50,6 +53,11 @@ namespace PerkyTemp.Models
                 68.7));
         }
 
+        public void AddDatabaseChangeListener(DatabaseChange listener)
+        {
+            DatabaseChangeListeners += listener;
+        }
+
         public List<PastSession> GetSessions()
         {
             return conn.Table<PastSession>().ToList();
@@ -57,14 +65,17 @@ namespace PerkyTemp.Models
 
         public int SaveSession(PastSession session)
         {
+            int retval;
             if (session.ID != 0)
             {
-                return conn.Update(session);
+                retval = conn.Update(session);
             }
             else
             {
-                return conn.Insert(session);
+                retval = conn.Insert(session);
             }
+            DatabaseChangeListeners?.Invoke();
+            return retval;
         }
 
         public SettingsModel GetSettings()
@@ -79,6 +90,7 @@ namespace PerkyTemp.Models
         public void SaveSettings(SettingsModel settings)
         {
             conn.InsertOrReplace(settings);
+            DatabaseChangeListeners?.Invoke();
         }
     }
 }

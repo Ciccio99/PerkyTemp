@@ -11,5 +11,10 @@ namespace PerkyTemp.Views
         {
             InitializeComponent();
         }
+
+        private void Btn_Clicked(object sender, EventArgs e)
+        {
+            TheViewModel.StartOrStopCurrentSession();
+        }
     }
 }

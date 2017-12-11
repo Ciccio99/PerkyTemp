@@ -5,7 +5,7 @@
              x:Class="PerkyTemp.Views.CurrentSessionPage"
              Title="Current Session">
     <ContentPage.BindingContext>
-        <ViewModels:CurrentSessionViewModel/>
+        <ViewModels:CurrentSessionViewModel x:Name="TheViewModel" />
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
@@ -13,7 +13,24 @@
             <!-- Padding for iOS-->
             <Label Text="" />
 
-            <Label Text="This is CurrentSessionPage" />
+            <Label Text="PerkyTemp" FontSize="Large" FontAttributes="Bold" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Label Text="Current temp:" FontSize="Large" Grid.Row="0" Grid.Column="0" />
+                <Label Text="{Binding CurrentTemp}" FontSize="Large" Grid.Row="0" Grid.Column="1" />
+            </Grid>
+
+            <Button x:Name="Btn" Text="{Binding ButtonText}" FontSize="Large" FontAttributes="Bold" Clicked="Btn_Clicked" />
+            <Label Text="{Binding Status}" FontSize="Medium" />
+
             <Label Text="{Binding Log}" />
         </StackLayout>
     </ContentPage.Content>

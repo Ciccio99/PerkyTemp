@@ -39,18 +39,6 @@ namespace PerkyTemp.Models
             conn = new SQLiteConnection(path);
             conn.CreateTable<PastSession>();
             conn.CreateTable<SettingsModel>();
-
-            // Insert some dummy data
-            SaveSession(PastSession.FromFields(
-                new DateTime(2017, 11, 13, 12, 34, 00),
-                new DateTime(2017, 11, 13, 12, 45, 00),
-                58.7,
-                72.1));
-            SaveSession(PastSession.FromFields(
-                new DateTime(2017, 11, 16, 4, 00, 00),
-                new DateTime(2017, 11, 16, 5, 45, 00),
-                42.9,
-                68.7));
         }
 
         public void AddDatabaseChangeListener(DatabaseChange listener)
@@ -60,7 +48,7 @@ namespace PerkyTemp.Models
 
         public List<PastSession> GetSessions()
         {
-            return conn.Table<PastSession>().ToList();
+            return conn.Table<PastSession>().Reverse().ToList();
         }
 
         public int SaveSession(PastSession session)

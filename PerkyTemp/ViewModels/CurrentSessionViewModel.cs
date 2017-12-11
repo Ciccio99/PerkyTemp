@@ -31,8 +31,6 @@ namespace PerkyTemp.ViewModels {
                 : "No current session";
         }
 
-        public string Log { get; set; }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string propertyName)
@@ -45,7 +43,6 @@ namespace PerkyTemp.ViewModels {
         {
             _bluetoothManager = DependencyService.Get<IBluetoothManager> ();
             _notificationManager = DependencyService.Get<INotificationManager> ();
-            Log = _bluetoothManager.Test ();
             TemperatureSensor.Instance.OnTemperatureUpdatedEvent += OnTemperatureChanged;
         }
 

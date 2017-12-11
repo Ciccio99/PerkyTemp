@@ -28,6 +28,20 @@
                 <Entry FontSize="Large" Grid.Row="0" Grid.Column="0" Text="{Binding NotificationTime, Mode=TwoWay}" Keyboard="Numeric" />
                 <Label Text="minutes" FontSize="Large" Grid.Row="0" Grid.Column="1" />
             </Grid>
+
+            <Label Text="Temperature at which the vest is no longer effective:" FontSize="Large" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Entry FontSize="Large" Grid.Row="0" Grid.Column="0" Text="{Binding TemperatureThreshold, Mode=TwoWay}" Keyboard="Numeric" />
+                <Label Text="deg C" FontSize="Large" Grid.Row="0" Grid.Column="1" />
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

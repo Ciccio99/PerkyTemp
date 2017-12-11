@@ -28,5 +28,17 @@ namespace PerkyTemp.ViewModels
                 OnPropertyChanged(nameof(NotificationTime));
             }
         }
+
+        public float TemperatureThreshold
+        {
+            get => PerkyTempDatabase.Database.GetSettings().TemperatureThreshold;
+            set
+            {
+                SettingsModel currentSettings = PerkyTempDatabase.Database.GetSettings();
+                currentSettings.TemperatureThreshold = value;
+                PerkyTempDatabase.Database.SaveSettings(currentSettings);
+                OnPropertyChanged(nameof(TemperatureThreshold));
+            }
+        }
     }
 }

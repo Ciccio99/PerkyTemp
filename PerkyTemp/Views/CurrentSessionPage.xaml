@@ -30,8 +30,6 @@
 
             <Button x:Name="Btn" Text="{Binding ButtonText}" FontSize="Large" FontAttributes="Bold" Clicked="Btn_Clicked" />
             <Label Text="{Binding Status}" FontSize="Medium" />
-
-            <Label Text="{Binding Log}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

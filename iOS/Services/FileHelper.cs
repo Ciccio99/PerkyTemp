@@ -1,11 +1,10 @@
-﻿using PerkyTemp.iOS;
-using PerkyTemp.Models;
+﻿using PerkyTemp.Interfaces;
 using System;
 using System.IO;
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(FileHelper))]
-namespace PerkyTemp.iOS
+[assembly: Dependency(typeof(PerkyTemp.iOS.Services.FileHelper))]
+namespace PerkyTemp.iOS.Services
 {
     public class FileHelper : IFileHelper
     {

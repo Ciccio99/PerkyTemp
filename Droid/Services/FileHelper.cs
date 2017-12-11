@@ -1,11 +1,10 @@
-﻿using PerkyTemp.Droid;
-using PerkyTemp.Models;
+﻿using PerkyTemp.Interfaces;
 using System;
 using System.IO;
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(FileHelper))]
-namespace PerkyTemp.Droid
+[assembly: Dependency(typeof(PerkyTemp.Droid.Services.FileHelper))]
+namespace PerkyTemp.Droid.Services
 {
     public class FileHelper : IFileHelper
     {

@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using PerkyTemp.Interfaces;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,12 @@ using Xamarin.Forms;
 
 namespace PerkyTemp.Models
 {
-    public interface IFileHelper
-    {
-        string GetLocalFilePath(string filename);
-    }
-
+    /// <summary>
+    /// Singleton class to connect to the SQLite database and store/retrieve
+    /// data.
+    /// </summary>
+    /// <seealso cref="PastSession"/>
+    /// <seealso cref="SettingsModel"/>
     class PerkyTempDatabase
     {
         private static PerkyTempDatabase instance;

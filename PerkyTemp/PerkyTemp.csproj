@@ -41,6 +41,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IFileHelper.cs" />
     <Compile Include="Models\PerkyTempDatabase.cs" />
     <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="PerkyTempPage.xaml.cs">
@@ -100,7 +101,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
-    <Folder Include="Utilities\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\SettingsPage.xaml">

@@ -3,6 +3,11 @@ using SQLite;
 
 namespace PerkyTemp.Models
 {
+    /// <summary>
+    /// A model representing a past session.
+    /// This is stored in the database using PerkyTempDatabase.
+    /// </summary>
+    /// <seealso cref="PerkyTempDatabase"/>
     public class PastSession
     {
         [PrimaryKey, AutoIncrement]

@@ -23,8 +23,6 @@ namespace PerkyTemp.Models {
             } 
         }
 
-
-
         private float _temperature;
 
         private static TemperatureSensor instance;

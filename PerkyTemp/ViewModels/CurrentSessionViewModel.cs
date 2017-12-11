@@ -9,9 +9,11 @@ namespace PerkyTemp.ViewModels {
         private bool isSessionStarted = false;
         private DateTime whenSessionStarted;
 
-        public float CurrentTemp
+        public string CurrentTemp
         {
-            get => TemperatureSensor.Instance.Temperature;
+            get => TemperatureSensor.Instance.UUID != null ? 
+                                    TemperatureSensor.Instance.Temperature.ToString () :
+                                    "Scanning...";
         }
 
         public string ButtonText
@@ -72,7 +74,7 @@ namespace PerkyTemp.ViewModels {
         }
 
         private void OnTemperatureChanged () {
-            OnPropertyChanged ("CurrentTemp");
+            OnPropertyChanged (nameof (CurrentTemp));
         }
     }
 }

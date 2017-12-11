@@ -20,6 +20,7 @@ namespace PerkyTemp.iOS.Services {
         private PerkyCBCentralManagerDelegate _managerDel;
         private CBCentralManager _centralManager;
         private CBPeripheral _activePeripheral;
+        private bool _timerRunning;
 
         public BluetoothManager () {
             _managerDel = new PerkyCBCentralManagerDelegate ();
@@ -28,9 +29,6 @@ namespace PerkyTemp.iOS.Services {
             _centralManager.UpdatedState += OnUpdatedState;
             _centralManager.DiscoveredPeripheral += OnDiscoveredPeripheral;
             _centralManager.ConnectedPeripheral += OnPeripheralConnected;
-            _centralManager.FailedToConnectPeripheral += OnFailedToConnectToPeripheral;
-
-            Debug.WriteLine ("Bluetooth manager IOS constructed");
         }
 
         public string Test () {
@@ -52,29 +50,12 @@ namespace PerkyTemp.iOS.Services {
         public void OnUpdatedState (Object s, EventArgs e) {
             if (_centralManager.State == CBCentralManagerState.PoweredOn) {
                 Debug.WriteLine ("Scanning for peripherals");
-                ScanForTemperatureSensor ();
+                if (!_centralManager.IsScanning)
+                    ScanForTemperatureSensor ();
             } else {
+                // TODO: pop up notification if not bluetooth
                 Console.WriteLine ("Bluetooth is not available!");
             }
-        }
-
-        public void ScanForTemperatureSensor () {
-            CBUUID[] cbuuids = null;
-            _centralManager.ScanForPeripherals (cbuuids);
-            //Timeout of 70 secs    
-            var timer = new Timer (70 * 1000);
-            timer.Elapsed += (sender, ev) => { 
-                ((Timer)sender).Stop ();
-                ((Timer)sender).Dispose ();
-                OnScanTimeout (); 
-            };
-            timer.Start ();
-
-        }
-
-        private void OnScanTimeout () {
-            Debug.WriteLine ("Stopping Scan for devices");
-            _centralManager?.StopScan ();
         }
 
         private void OnDiscoveredPeripheral (Object sender, CBDiscoveredPeripheralEventArgs e) {
@@ -86,26 +67,47 @@ namespace PerkyTemp.iOS.Services {
             // Get keys becase keys are NSobjects and are weird to decipher, if no keys then null
             var serviceDataKeys = serviceDataDict?.Keys;
 
-            if (serviceDataKeys != null && 
+
+            // If the previous ID matches or the peripheral has the desired content...
+            if (TemperatureSensor.Instance.UUID == peripheral.Identifier.ToString () ||
+                (serviceDataKeys != null && 
                 serviceDataKeys.Length == 2 && 
                 serviceDataKeys[0].Description == Constants.HEALTH_THERMOMETER && 
-                serviceDataKeys[1].Description == Constants.BATTERY) {
+                 serviceDataKeys[1].Description == Constants.BATTERY)) {
 
+                // Extract data
                 var temperature = serviceDataDict[serviceDataKeys[0]].Description;
                 temperature = Regex.Replace (temperature, "[<>]", "");
                 var battery = serviceDataDict[serviceDataKeys[1]].Description;
                 battery = Regex.Replace (battery, "[<>]", "");
 
-                Debug.WriteLine ("service data: {0}", temperature);
-                Debug.WriteLine ("service data: {0}", battery);
                 // Stop the scan once found
                 _centralManager.StopScan ();
                 _SetActivePeripheral (peripheral, temperature);
             }
         }
+       
+        private void OnScanTimeout () {
+            Debug.WriteLine ("Stopping Scan for devices");
+            _centralManager?.StopScan ();
+            InitTimerNextScan ();
+        }
 
-        private void OnFailedToConnectToPeripheral (Object e, CBPeripheralErrorEventArgs args) {
-            Debug.WriteLine ("Failed to connect to {0} because {1} ", args.Peripheral.Identifier, args.Error.ToString ());
+        public void ScanForTemperatureSensor () {
+            if (_centralManager.IsScanning) {
+                return;
+            }
+
+            _centralManager.ScanForPeripherals (new CBUUID[0]);
+
+            //Timeout of 70 secs    
+            var timer = new Timer (45 * 1000);
+            timer.Elapsed += (sender, ev) => {
+                ((Timer)sender).Stop ();
+                ((Timer)sender).Dispose ();
+                OnScanTimeout ();
+            };
+            timer.Start ();
         }
 
         private void _SetActivePeripheral (CBPeripheral peripheral, string temperature) {
@@ -117,6 +119,23 @@ namespace PerkyTemp.iOS.Services {
             tempSensor.UUID = peripheral.Identifier.ToString ();
 
             Debug.WriteLine ("Temperature: {0}", tempSensor.Temperature);
+            InitTimerNextScan ();
+        }
+
+        private void InitTimerNextScan () {
+            if (_timerRunning == true) return;
+
+            Debug.WriteLine ("Starting timer for next scan...");
+
+            var timer = new Timer (Constants.TIME_UNTIL_NEXT_SCAN * 1000);
+            timer.Elapsed += (sender, e) => {
+                ScanForTemperatureSensor ();
+                ((Timer)sender).Stop ();
+                ((Timer)sender).Dispose ();
+                _timerRunning = false;
+            };
+            timer.Start ();
+            _timerRunning = true;
         }
     }
 }

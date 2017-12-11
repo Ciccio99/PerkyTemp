@@ -9,14 +9,6 @@ namespace PerkyTemp.Utilities {
             return (temp * 9f / 5f) + 32f;
         }
 
-        //public static float HexStringTempToFloatTemp (string hexString) {
-        //    var charHexArray = StringHexToCharHexArray (hexString);
-        //    var flippedCharArr = FlipCharArray (charHexArray);
-        //    var temperature = ExtractTemperatureFromChars (flippedCharArr);
-
-        //    return temperature;
-        //}
-
         public static float StringHexToTemperature (string hexInput) {
             // Clean input
             hexInput = Regex.Replace (hexInput, "[ ,|']", "[]");
@@ -28,36 +20,6 @@ namespace PerkyTemp.Utilities {
             float tempf = (float) temperatureValue / 100f;
 
             return tempf;
-        }
-
-        //public static char[] StringHexToCharHexArray (string hexInput) {
-        //    // Clean input
-        //    hexInput = Regex.Replace (hexInput, "[ ,|']", "[]");
-        //    // Split into string array of bytes
-        //    string[] hexSplitVals = SplitInParts (hexInput, 2);
-
-        //    string joinedTempHex = String.Join ("", new string[] {hexSplitVals[1], hexSplitVals[0]});
-        //    int temperatureValue = Convert.ToInt32 (joinedTempHex, 16);
-
-        //    char[] charHexArray = new char[hexSplitVals.Length];
-        //    for (int i = 0; i < hexSplitVals.Length; i++) {
-        //        int val = Convert.ToInt32 (hexSplitVals[i], 16);
-        //        charHexArray[i] = (char)val;
-        //        Debug.WriteLine ("Char: " + charHexArray[i]);
-        //    }
-
-        //    return charHexArray;
-        //}
-
-        public static char[] FlipCharArray (char[] charArray) {
-            var flipped = new char[charArray.Length];
-            int f = flipped.Length - 1;
-
-            for (int i = 0; i < charArray.Length; i++, f--) {
-                flipped[i] = charArray[f];
-            }
-
-            return flipped;
         }
 
         public static float ExtractTemperatureFromChars (char[] hexChars) {

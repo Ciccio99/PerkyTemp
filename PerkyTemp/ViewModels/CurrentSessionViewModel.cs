@@ -148,18 +148,31 @@ namespace PerkyTemp.ViewModels {
 
             if (currentSession == null) return;
 
-            double? notificationTime = currentSession.GetTimeRemainingSec();
-            if (notificationTime != null)
+            double? vestTimeRemainingSec = currentSession.GetTimeRemainingSec();
+            if (vestTimeRemainingSec != null)
             {
-                double notificationTimeSettingMins = PerkyTempDatabase.Database.GetSettings().NotificationTime;
-                double secsInFuture = notificationTime.Value - notificationTimeSettingMins * 60.0;
-                // If it's less than 30 secs in the future, just send it "now"
-                if (secsInFuture < 30.0) secsInFuture = 0.01;
-                _currentSessionNotificationID = _notificationManager.ScheduleNotification(
-                    secsInFuture,
-                    false,
-                    notificationTimeSettingMins + " min remaining",
-                    "PerkyTemp: Vest will expire in " + notificationTimeSettingMins + " minutes");
+                // If less than 30 secs remaining, say "expired"
+                if (vestTimeRemainingSec < 30.0)
+                {
+                    _currentSessionNotificationID = _notificationManager.ScheduleNotification(
+                        0.01,  // "now"
+                        false,
+                        "Vest has expired",
+                        "PerkyTemp: Vest has expired. Take shelter!");
+                }
+                else
+                {
+                    double notificationTimeSettingMins = PerkyTempDatabase.Database.GetSettings().NotificationTime;
+                    double secsInFuture = vestTimeRemainingSec.Value - notificationTimeSettingMins * 60.0;
+                    int minsRemaining = (int)Math.Round(vestTimeRemainingSec.Value / 60.0);
+                    // If it's less than 30 secs in the future, just send it "now"
+                    if (secsInFuture < 30.0) secsInFuture = 0.01;
+                    _currentSessionNotificationID = _notificationManager.ScheduleNotification(
+                        secsInFuture,
+                        false,
+                        minsRemaining + " minutes remaining",
+                        "PerkyTemp: Vest will expire in " + minsRemaining + " minutes");
+                }
             }
         }
     }

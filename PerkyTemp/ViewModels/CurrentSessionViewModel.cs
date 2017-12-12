@@ -151,8 +151,11 @@ namespace PerkyTemp.ViewModels {
             if (notificationTime != null)
             {
                 double notificationTimeSettingMins = PerkyTempDatabase.Database.GetSettings().NotificationTime;
+                double secsInFuture = notificationTime.Value - notificationTimeSettingMins * 60.0;
+                // If it's less than 30 secs in the future, just send it "now"
+                if (secsInFuture < 30.0) secsInFuture = 0.01;
                 _currentSessionNotificationID = _notificationManager.ScheduleNotification(
-                    notificationTime.Value - notificationTimeSettingMins * 60.0,
+                    secsInFuture,
                     false,
                     notificationTimeSettingMins + " min remaining",
                     "PerkyTemp: Vest will expire in " + notificationTimeSettingMins + " minutes");

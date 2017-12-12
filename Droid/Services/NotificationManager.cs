@@ -20,6 +20,7 @@ namespace PerkyTemp.Droid.Services {
         /// <param name="body">Body.</param>
         public string ScheduleNotification(double timeInterval, bool repeats, string title, string body)
         {
+            // TODO: Implement for Android
             Debug.WriteLine("Android: Schedule a notification, title: {0}, body: {1}, timeInterval: {2}", title, body, timeInterval);
             var requestID = Guid.NewGuid().ToString("D");
             return requestID;
@@ -31,7 +32,8 @@ namespace PerkyTemp.Droid.Services {
         /// <param name="requestID">Request identifier.</param>
         public void RemovePendingNotification(string requestID)
         {
-            Debug.WriteLine("Androind: Remove A pending notification: {0}", requestID);
+            // TODO: Implement for Android
+            Debug.WriteLine("Android: Remove a pending notification: {0}", requestID);
         }
 
         /// <summary>
@@ -39,7 +41,8 @@ namespace PerkyTemp.Droid.Services {
         /// </summary>
         public void RemoveAllPendingNotifications()
         {
-            Debug.WriteLine("Remove Android Notifications!");
+            // TODO: Implement for Android
+            Debug.WriteLine("Android: Remove all notifications!");
         }
 
         /// <summary>

@@ -57,6 +57,13 @@ namespace PerkyTemp.Models
 
             // At what timestamp will we be at temperature "threshold"?
             double thresholdTime = (threshold - b) / m + BASE_TIME;
+
+            // If that's more than 10 days in the future, assume that we have bad data
+            if (thresholdTime > DateTimeToUnixTimestamp(DateTime.Now + TimeSpan.FromDays(10)))
+            {
+                return null;
+            }
+
             return Math.Max(0.0, thresholdTime - DateTimeToUnixTimestamp(DateTime.Now));
         }
 

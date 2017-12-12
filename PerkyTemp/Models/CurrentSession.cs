@@ -42,7 +42,7 @@ namespace PerkyTemp.Models
         public double GetTimeRemainingSec()
         {
             float threshold = PerkyTempDatabase.Database.GetSettings().TemperatureThreshold;
-            // TODO
+            // TODO: Compute based on the TempReadings over time
             return 120.0;
         }
     }

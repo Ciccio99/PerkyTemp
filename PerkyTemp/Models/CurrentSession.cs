@@ -10,6 +10,8 @@ namespace PerkyTemp.Models
 {
     public class CurrentSession
     {
+        private static readonly double BASE_TIME = DateTimeToUnixTimestamp(DateTime.Now);
+
         public DateTime StartTime { get; private set; }
         public float? FirstTemp { get; private set; }
         public float? LatestTemp { get; private set; }
@@ -54,22 +56,22 @@ namespace PerkyTemp.Models
             LinearRegression(DateTimeDictToDoublePairs(TempReadings), out double m, out double b);
 
             // At what timestamp will we be at temperature "threshold"?
-            double thresholdTime = (threshold - b) / m;
-            return Math.Max(0.0, threshold - DateTimeToUnixTimestamp(DateTime.Now));
+            double thresholdTime = (threshold - b) / m + BASE_TIME;
+            return Math.Max(0.0, thresholdTime - DateTimeToUnixTimestamp(DateTime.Now));
         }
 
         private static IEnumerable<KeyValuePair<double, double>> DateTimeDictToDoublePairs(Dictionary<DateTime, float> d)
         {
             foreach (var keyval in d)
             {
-                yield return new KeyValuePair<double, double>(DateTimeToUnixTimestamp(keyval.Key), keyval.Value);
+                yield return new KeyValuePair<double, double>(DateTimeToUnixTimestamp(keyval.Key) - BASE_TIME, keyval.Value);
             }
         }
 
         /// <summary>
         /// Compute the linear regression y=mx+b using least-squares regression.
         /// </summary>
-        private static void LinearRegression(IEnumerable<KeyValuePair<double, double>> points,
+        public static void LinearRegression(IEnumerable<KeyValuePair<double, double>> points,
                                       out double m, out double b)
         {
             double Xsum = 0;
@@ -98,8 +100,8 @@ namespace PerkyTemp.Models
             double Xmean = Xsum / count;
             double Ymean = Ysum / count;
 
-            m = Ymean - ((sCo / ssX) * Xmean);
-            b = sCo / ssX;
+            m = sCo / ssX;
+            b = Ymean - ((sCo / ssX) * Xmean);
         }
     }
 }

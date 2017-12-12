@@ -15,7 +15,7 @@ namespace PerkyTemp.Models
     /// </summary>
     /// <seealso cref="PastSession"/>
     /// <seealso cref="SettingsModel"/>
-    class PerkyTempDatabase
+    public class PerkyTempDatabase
     {
         private static PerkyTempDatabase instance;
 
@@ -25,22 +25,22 @@ namespace PerkyTemp.Models
             {
                 if (instance == null)
                 {
-                    instance = new PerkyTempDatabase(DependencyService.Get<IFileHelper>().GetLocalFilePath("PerkyTempSQLite.db3"));
+                    instance = new PerkyTempDatabase();
                 }
                 return instance;
             }
         }
         
         private SQLiteConnection conn;
+        private bool _inited = false;
+
+        public SettingsModel MockedSettingsForTesting { get; set; }
 
         public delegate void DatabaseChange();
         public event DatabaseChange DatabaseChangeListeners;
 
-        private PerkyTempDatabase(string path)
+        private PerkyTempDatabase()
         {
-            conn = new SQLiteConnection(path);
-            conn.CreateTable<PastSession>();
-            conn.CreateTable<SettingsModel>();
         }
 
         public void AddDatabaseChangeListener(DatabaseChange listener)
@@ -48,13 +48,27 @@ namespace PerkyTemp.Models
             DatabaseChangeListeners += listener;
         }
 
+        private void InitDatabase()
+        {
+            if (_inited) return;
+
+            conn = new SQLiteConnection(DependencyService.Get<IFileHelper>().GetLocalFilePath("PerkyTempSQLite.db3"));
+            conn.CreateTable<PastSession>();
+            conn.CreateTable<SettingsModel>();
+            _inited = true;
+        }
+
         public List<PastSession> GetSessions()
         {
+            InitDatabase();
+
             return conn.Table<PastSession>().Reverse().ToList();
         }
 
         public int SaveSession(PastSession session)
         {
+            InitDatabase();
+
             int retval;
             if (session.ID != 0)
             {
@@ -70,6 +84,13 @@ namespace PerkyTemp.Models
 
         public SettingsModel GetSettings()
         {
+            if (MockedSettingsForTesting != null)
+            {
+                return MockedSettingsForTesting;
+            }
+
+            InitDatabase();
+
             if (conn.Find<SettingsModel>(SettingsModel.DEFAULT_ID) == null)
             {
                 conn.Insert(SettingsModel.NewSettingsModel());
@@ -79,6 +100,8 @@ namespace PerkyTemp.Models
 
         public void SaveSettings(SettingsModel settings)
         {
+            InitDatabase();
+
             conn.InsertOrReplace(settings);
             DatabaseChangeListeners?.Invoke();
         }

@@ -29,32 +29,32 @@
             <Label Text="Settings" FontSize="32" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" FontAttributes="Bold" TextColor="#2C5C65" Margin="8,5,8,0"/>
 
             
-            <Label Text="Send notification when the remaining cooling time is:" FontSize="Large" />
-            <Grid Padding="8,0,8,0" Margin="0,2,0,8">
+            <Label Text="Notifcation time before cooling runs out:" Margin="8,8,8,0" TextColor="#afafaf"  FontAttributes="Bold" FontSize="Large" />
+            <Grid Padding="8,0,8,0" Margin="0,6,0,10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="80*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <Entry FontSize="Large" Grid.Row="0" Grid.Column="0" Text="{Binding NotificationTime, Mode=TwoWay}" Keyboard="Text" />
-                <Label Text="minutes" FontSize="Large" Grid.Row="0" Grid.Column="1" />
+                <Label Text="mins" FontSize="Large" HorizontalTextAlignment="Start" LineBreakMode="NoWrap" Grid.Row="0" Grid.Column="1" />
             </Grid>
 
-            <Label Text="Temperature at which the vest is no longer effective:" FontSize="Large" />
-            <Grid Padding="8,0,8,0" Margin="0,2,0,8">
+            <Label Text="Temperature at which the vest is no longer effective:" Margin="8,8,8,0" TextColor="#afafaf" FontAttributes="Bold" FontSize="Large" />
+            <Grid Padding="8,0,8,0" Margin="0,6,0,10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="80*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <Entry FontSize="Large" Grid.Row="0" Grid.Column="0" Text="{Binding TemperatureThreshold, Mode=TwoWay}" Keyboard="Numeric" />
-                <Label Text="deg C" FontSize="Large" Grid.Row="0" Grid.Column="1" />
+                <Label Text="°C" FontSize="Large" HorizontalTextAlignment="Start" LineBreakMode="NoWrap" Grid.Row="0" Grid.Column="1" />
             </Grid>
         </StackLayout>
     </ContentPage.Content>

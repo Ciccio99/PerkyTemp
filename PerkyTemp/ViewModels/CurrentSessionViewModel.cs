@@ -63,6 +63,7 @@ namespace PerkyTemp.ViewModels {
 
         public void OnDatabaseUpdated()
         {
+            OnPropertyChanged(nameof(Status));
             RescheduleNotification();
         }
 

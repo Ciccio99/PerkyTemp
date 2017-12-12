@@ -8,7 +8,7 @@ using static PerkyTemp.Utilities.Utilities;
 
 namespace PerkyTemp.Models
 {
-    class CurrentSession
+    public class CurrentSession
     {
         public DateTime StartTime { get; private set; }
         public float? FirstTemp { get; private set; }

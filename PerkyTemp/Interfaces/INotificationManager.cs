@@ -20,5 +20,10 @@ namespace PerkyTemp.Interfaces {
         /// Removes all pending notifications.
         /// </summary>
         void RemoveAllPendingNotifications ();
+
+        /// <summary>
+        /// Show a simple alert box.
+        /// </summary>
+        void Alert(string title, string message);
     }
 }

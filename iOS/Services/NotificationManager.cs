@@ -3,12 +3,13 @@ using PerkyTemp.Interfaces;
 using UserNotifications;
 using PerkyTemp.iOS.Notifications;
 using Xamarin.Forms;
+using UIKit;
 
-[assembly: Dependency (typeof (PerkyTemp.iOS.Services.NotificationsManager))]
+[assembly: Dependency (typeof (PerkyTemp.iOS.Services.NotificationManager))]
 namespace PerkyTemp.iOS.Services {
-    public class NotificationsManager : INotificationManager {
+    public class NotificationManager : INotificationManager {
 
-        public NotificationsManager () {
+        public NotificationManager () {
             // Attached delegate for how scheduled notifications should be handled
             UNUserNotificationCenter.Current.Delegate = new PerkyNotificationCenterDelegate ();
         }
@@ -55,6 +56,16 @@ namespace PerkyTemp.iOS.Services {
         /// </summary>
         public void RemoveAllPendingNotifications () {
             UNUserNotificationCenter.Current.RemoveAllPendingNotificationRequests ();
+        }
+
+        /// <summary>
+        /// Show a simple alert box.
+        /// </summary>
+        public void Alert(string title, string message)
+        {
+            var okAlertController = UIAlertController.Create(title, message, UIAlertControllerStyle.Alert);
+            okAlertController.AddAction(UIAlertAction.Create("Understood", UIAlertActionStyle.Default, null));
+            UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(okAlertController, true, () => { });
         }
     }
 }

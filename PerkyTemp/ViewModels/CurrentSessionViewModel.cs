@@ -81,14 +81,24 @@ namespace PerkyTemp.ViewModels {
 
         private void StartCurrentSession()
         {
-            // TODO: What to do if we don't have a temperature reading??
-            currentSession = new CurrentSession(TemperatureSensor.Instance.Temperature);
+            currentSession = new CurrentSession();
+            if (TemperatureSensor.Instance.UUID != null)
+                currentSession.RecordTempReading(TemperatureSensor.Instance.Temperature);
             RescheduleNotification();
         }
 
         private void StopCurrentSession()
         {
-            PerkyTempDatabase.Database.SaveSession(currentSession.EndSession());
+            PastSession maybePastSession = currentSession.EndSession();
+            if (maybePastSession == null)
+            {
+                _notificationManager.Alert("PerkyTemp", "Not recording current session because there is not enough temperature data");
+            }
+            else
+            {
+                PerkyTempDatabase.Database.SaveSession(maybePastSession);
+            }
+
             currentSession = null;
             if (_currentSessionNotificationID != null)
             {
@@ -118,15 +128,16 @@ namespace PerkyTemp.ViewModels {
 
             if (currentSession == null) return;
 
-            double notificationTimeSettingMins = PerkyTempDatabase.Database.GetSettings().NotificationTime;
-            double notificationTime = currentSession.GetTimeRemainingSec();
-            _currentSessionNotificationID = _notificationManager.ScheduleNotification(
-                notificationTime - notificationTimeSettingMins * 60.0,
-                false,
-                notificationTimeSettingMins + " min remaining",
-                "PerkyTemp: Vest will expire in " + notificationTimeSettingMins + " minutes");
+            double? notificationTime = currentSession.GetTimeRemainingSec();
+            if (notificationTime != null)
+            {
+                double notificationTimeSettingMins = PerkyTempDatabase.Database.GetSettings().NotificationTime;
+                _currentSessionNotificationID = _notificationManager.ScheduleNotification(
+                    notificationTime.Value - notificationTimeSettingMins * 60.0,
+                    false,
+                    notificationTimeSettingMins + " min remaining",
+                    "PerkyTemp: Vest will expire in " + notificationTimeSettingMins + " minutes");
+            }
         }
-
-
     }
 }

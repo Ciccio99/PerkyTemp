@@ -13,7 +13,7 @@ namespace PerkyTemp.Models
     /// PerkyTempDatabase).
     /// </summary>
     /// <seealso cref="PerkyTempDatabase"/>
-    class SettingsModel
+    public class SettingsModel
     {
         public const int DEFAULT_ID = 1;
         

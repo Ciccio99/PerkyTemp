@@ -17,11 +17,16 @@ namespace PerkyTemp.iOS.Services {
         /// <summary>
         /// Schedules the notification.
         /// </summary>
-        /// <param name="timeInterval">Time interval in seconds.</param>
+        /// <returns> GUID for the notification. Can be used to cancel it in the future. Will return NULL if inapropriate values are passed in</returns>
+        /// <param name="timeInterval">Time interval in seconds. MUST BE GREATER THAN 0.</param>
         /// <param name="repeats">If set to <c>true</c> repeats.</param>
         /// <param name="title">Title.</param>
         /// <param name="body">Body.</param>
         public string ScheduleNotification (double timeInterval, bool repeats, string title, string body) {
+            if (timeInterval <= 0) {
+                return null;
+            }
+
             var content = new UNMutableNotificationContent ();
             content.Title = title;
             content.Body = body;

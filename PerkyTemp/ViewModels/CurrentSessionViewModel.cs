@@ -124,6 +124,7 @@ namespace PerkyTemp.ViewModels {
         private void OnTemperatureChanged () {
             OnPropertyChanged (nameof (CurrentTemp));
             OnPropertyChanged (nameof (ConvertText));
+            OnPropertyChanged (nameof (OppositeConvertText));
             currentSession?.RecordTempReading(TemperatureSensor.Instance.Temperature);
             OnPropertyChanged(nameof(Status));
             RescheduleNotification();

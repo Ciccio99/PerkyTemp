@@ -10,7 +10,7 @@
 
     <ContentPage.Content>
         <StackLayout BackgroundColor="White">
-            <Grid BackgroundColor="#36AFC5" Padding="8,0,8,0">
+            <Grid BackgroundColor="#36AFC5" Padding="8,0,8,0" HeightRequest="40">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="33*" />
                     <ColumnDefinition Width="33*" />

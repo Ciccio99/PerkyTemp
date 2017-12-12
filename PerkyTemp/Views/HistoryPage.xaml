@@ -11,7 +11,7 @@
     <ContentPage.Content>
         <StackLayout BackgroundColor="White">
             <!--   Top Title border      -->
-             <Grid BackgroundColor="#36AFC5">
+             <Grid BackgroundColor="#36AFC5" Padding="8,0,8,0" HeightRequest="40">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="33*" />
                     <ColumnDefinition Width="33*" />
@@ -21,10 +21,13 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <Label Text="PerkyTemp" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" HeightRequest="40" Grid.Column="1" TextColor="#FFFFFF" BackgroundColor="#36AFC5" FontSize="Large" FontAttributes="Bold" Margin="10,0,0,0"/>
+                <Label Text="PerkyTemp" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" HeightRequest="40" Grid.Column="1" TextColor="#FFFFFF" BackgroundColor="#36AFC5" FontSize="Large" FontAttributes="Bold"/>
             </Grid>
             <!---->
-            <Grid>
+
+            <Label Text="History" FontSize="32" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" FontAttributes="Bold" TextColor="#2C5C65" Margin="8,5,8,0"/>
+
+            <Grid Padding="8,0,8,0" Margin="0,14,0,8">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="2*" />
@@ -35,17 +38,17 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <Label Text="Start Time" Grid.Row="0" Grid.Column="0" FontSize="Medium" />
-                <Label Text="Duration" Grid.Row="0" Grid.Column="1" FontSize="Medium" />
-                <Label Text="Start Temp" Grid.Row="0" Grid.Column="2" FontSize="Medium" />
-                <Label Text="Final Temp" Grid.Row="0" Grid.Column="3" FontSize="Medium" />
+                <Label Text="Start Time" Grid.Row="0" Grid.Column="0" FontSize="Medium" TextColor="#afafaf" FontAttributes="Bold" />
+                <Label Text="Duration" Grid.Row="0" Grid.Column="1" FontSize="Medium" TextColor="#afafaf" FontAttributes="Bold"/>
+                <Label Text="Start Temp" Grid.Row="0" Grid.Column="2" FontSize="Medium" TextColor="#afafaf" FontAttributes="Bold"/> 
+                <Label Text="Final Temp" Grid.Row="0" Grid.Column="3" FontSize="Medium" TextColor="#afafaf" FontAttributes="Bold"/>
             </Grid>
 
             <ListView ItemsSource="{Binding Sessions}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid>
+                            <Grid Padding="8,2,8,2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="2*" />
                                     <ColumnDefinition Width="2*" />

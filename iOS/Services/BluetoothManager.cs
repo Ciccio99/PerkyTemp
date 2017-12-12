@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.Timers;
 using Foundation;
 using PerkyTemp.Utilities;
-using System.Linq;
 using System.Text.RegularExpressions;
 using PerkyTemp.Models;
 using UIKit;
@@ -51,7 +50,6 @@ namespace PerkyTemp.iOS.Services {
 
         public void OnUpdatedState (Object s, EventArgs e) {
             if (_centralManager.State == CBCentralManagerState.PoweredOn) {
-                Debug.WriteLine ("Scanning for peripherals");
                 if (!_centralManager.IsScanning)
                     ScanForTemperatureSensor ();
             } else {
@@ -101,10 +99,12 @@ namespace PerkyTemp.iOS.Services {
                 return;
             }
 
+            Debug.WriteLine ("Scanning for peripherals");
+
             _centralManager.ScanForPeripherals (new CBUUID[0]);
 
-            //Timeout of 70 secs    
-            var timer = new Timer (45 * 1000);
+            // Set a timer to auto-stop scanning after a specified timer
+            var timer = new Timer (Constants.SCAN_TIME_DURATION * 1000);
             timer.Elapsed += (sender, ev) => {
                 ((Timer)sender).Stop ();
                 ((Timer)sender).Dispose ();

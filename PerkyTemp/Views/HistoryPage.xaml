@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ViewModels="clr-namespace:PerkyTemp.ViewModels;assembly=PerkyTemp"
@@ -9,12 +9,21 @@
     </ContentPage.BindingContext>
     
     <ContentPage.Content>
-        <StackLayout>
-            <!-- Padding for iOS-->
-            <Label Text="" />
+        <StackLayout BackgroundColor="White">
+            <!--   Top Title border      -->
+             <Grid BackgroundColor="#36AFC5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="33*" />
+                    <ColumnDefinition Width="33*" />
+                    <ColumnDefinition Width="33*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-            <Label Text="Past Sessions:" FontSize="Large" FontAttributes="Bold" />
-
+                <Label Text="PerkyTemp" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" HeightRequest="40" Grid.Column="1" TextColor="#FFFFFF" BackgroundColor="#36AFC5" FontSize="Large" FontAttributes="Bold" Margin="10,0,0,0"/>
+            </Grid>
+            <!---->
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />

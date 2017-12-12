@@ -17,9 +17,9 @@ namespace PerkyTemp.Models
 
         public double FinalDateTimestamp { get; private set; }
 
-        public double StartTemp { get; private set; }
+        public float StartTemp { get; private set; }
 
-        public double FinalTemp { get; private set; }
+        public float FinalTemp { get; private set; }
 
         [Ignore]
         public string Date
@@ -41,7 +41,7 @@ namespace PerkyTemp.Models
 
         public PastSession() { }
 
-        public static PastSession FromFields(DateTime StartDateTime, DateTime FinalDateTime, double StartTemp, double FinalTemp) {
+        public static PastSession FromFields(DateTime StartDateTime, DateTime FinalDateTime, float StartTemp, float FinalTemp) {
             PastSession session = new PastSession();
             session.ID = 0;
             session.StartDateTimestamp = (StartDateTime - new DateTime(1970, 1, 1)).TotalSeconds;

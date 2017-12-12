@@ -23,7 +23,7 @@ namespace PerkyTemp.Models {
             } 
         }
 
-        private float _temperature;
+        private float _temperature = float.MinValue;
 
         private static TemperatureSensor instance;
 

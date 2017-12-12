@@ -1,5 +1,6 @@
 ﻿using System;
 using SQLite;
+using static PerkyTemp.Utilities.Utilities;
 
 namespace PerkyTemp.Models
 {
@@ -26,7 +27,7 @@ namespace PerkyTemp.Models
         {
             get
             {
-                return (new DateTime(1970, 1, 1) + TimeSpan.FromSeconds(StartDateTimestamp)).ToString();
+                return UnixTimestampToDateTime(StartDateTimestamp).ToString();
             }
         }
 
@@ -44,8 +45,8 @@ namespace PerkyTemp.Models
         public static PastSession FromFields(DateTime StartDateTime, DateTime FinalDateTime, float StartTemp, float FinalTemp) {
             PastSession session = new PastSession();
             session.ID = 0;
-            session.StartDateTimestamp = (StartDateTime - new DateTime(1970, 1, 1)).TotalSeconds;
-            session.FinalDateTimestamp = (FinalDateTime - new DateTime(1970, 1, 1)).TotalSeconds;
+            session.StartDateTimestamp = DateTimeToUnixTimestamp(StartDateTime);
+            session.FinalDateTimestamp = DateTimeToUnixTimestamp(FinalDateTime);
             session.StartTemp = StartTemp;
             session.FinalTemp = FinalTemp;
             return session;
@@ -55,8 +56,8 @@ namespace PerkyTemp.Models
         {
             return string.Format("[PastSession: ID={0}, StartDateTime={1}, FinalDateTime={2}, StartTemp={3}, FinalTemp={4}]",
                 ID,
-                new DateTime(1970, 1, 1) + TimeSpan.FromSeconds(StartDateTimestamp),
-                new DateTime(1970, 1, 1) + TimeSpan.FromSeconds(FinalDateTimestamp),
+                UnixTimestampToDateTime(StartDateTimestamp),
+                UnixTimestampToDateTime(FinalDateTimestamp),
                 StartTemp,
                 FinalTemp);
         }

@@ -50,5 +50,15 @@ namespace PerkyTemp.Utilities {
 
             return stringSplits.ToArray ();
         }
+
+        public static double DateTimeToUnixTimestamp(DateTime dt)
+        {
+            return (dt - new DateTime(1970, 1, 1)).TotalSeconds;
+        }
+
+        public static DateTime UnixTimestampToDateTime(double ts)
+        {
+            return new DateTime(1970, 1, 1) + TimeSpan.FromSeconds(ts);
+        }
     }
 }

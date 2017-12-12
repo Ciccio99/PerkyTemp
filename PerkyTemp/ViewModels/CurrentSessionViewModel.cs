@@ -40,9 +40,18 @@ namespace PerkyTemp.ViewModels {
 
         public string Status
         {
-            get => currentSession == null
-                ? "No current session"
-                : "Session started " + Math.Round((DateTime.Now - currentSession.StartTime).TotalMinutes, 2) + " minutes ago";
+            get
+            {
+                if (currentSession == null) return "No current session";
+
+                string msg = "Session started " + Math.Round((DateTime.Now - currentSession.StartTime).TotalMinutes) + " minutes ago";
+                double? timeRemaining = currentSession.GetTimeRemainingSec();
+                if (timeRemaining != null)
+                {
+                    msg += "; vest will expire in " + Math.Round(TimeSpan.FromSeconds(timeRemaining.Value).TotalMinutes) + " minutes";
+                }
+                return msg;
+             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -114,8 +123,9 @@ namespace PerkyTemp.ViewModels {
 
         private void OnTemperatureChanged () {
             OnPropertyChanged (nameof (CurrentTemp));
-            OnPropertyChanged (nameof (ConvertText) );
+            OnPropertyChanged (nameof (ConvertText));
             currentSession?.RecordTempReading(TemperatureSensor.Instance.Temperature);
+            OnPropertyChanged(nameof(Status));
             RescheduleNotification();
         }
 

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PerkyTemp.Utilities.Utilities;
 
 namespace PerkyTemp.Models
 {
@@ -46,9 +48,58 @@ namespace PerkyTemp.Models
             // If we've only had one temperature reading, we can't predict yet
             if (TempReadings.Count < 2) return null;
 
-            float threshold = PerkyTempDatabase.Database.GetSettings().TemperatureThreshold;
-            // TODO: Compute based on the TempReadings over time
-            return 120.0;
+            double threshold = PerkyTempDatabase.Database.GetSettings().TemperatureThreshold;
+
+            // Perform linear regression on the current temp data
+            LinearRegression(DateTimeDictToDoublePairs(TempReadings), out double m, out double b);
+
+            // At what timestamp will we be at temperature "threshold"?
+            double thresholdTime = (threshold - b) / m;
+            return Math.Max(0.0, threshold - DateTimeToUnixTimestamp(DateTime.Now));
+        }
+
+        private static IEnumerable<KeyValuePair<double, double>> DateTimeDictToDoublePairs(Dictionary<DateTime, float> d)
+        {
+            foreach (var keyval in d)
+            {
+                yield return new KeyValuePair<double, double>(DateTimeToUnixTimestamp(keyval.Key), keyval.Value);
+            }
+        }
+
+        /// <summary>
+        /// Compute the linear regression y=mx+b using least-squares regression.
+        /// </summary>
+        private static void LinearRegression(IEnumerable<KeyValuePair<double, double>> points,
+                                      out double m, out double b)
+        {
+            double Xsum = 0;
+            double Ysum = 0;
+            double XsqSum = 0;
+            double YsqSum = 0;
+            double sumCodeviates = 0;
+
+            int count = 0;
+            foreach (var pair in points)
+            {
+                count += 1;
+
+                double x = pair.Key, y = pair.Value;
+                sumCodeviates += x * y;
+                Xsum += x;
+                Ysum += y;
+                XsqSum += x * x;
+                YsqSum += y * y;
+            }
+
+            double ssX = XsqSum - ((Xsum * Xsum) / count);
+            double ssY = YsqSum - ((Ysum * Ysum) / count);
+            double sCo = sumCodeviates - ((Xsum * Ysum) / count);
+
+            double Xmean = Xsum / count;
+            double Ymean = Ysum / count;
+
+            m = Ymean - ((sCo / ssX) * Xmean);
+            b = sCo / ssX;
         }
     }
 }

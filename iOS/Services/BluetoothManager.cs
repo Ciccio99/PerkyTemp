@@ -61,7 +61,6 @@ namespace PerkyTemp.iOS.Services {
 
         private void OnDiscoveredPeripheral (Object sender, CBDiscoveredPeripheralEventArgs e) {
             var peripheral = e.Peripheral;
-            Debug.WriteLine ("Discovered {0}, data {1}, RSSI {2}", peripheral.Identifier, e.AdvertisementData, e.RSSI);
 
             // Get advertised data and convert to dict
             var serviceDataDict = (NSDictionary) e.AdvertisementData[CBAdvertisement.DataServiceDataKey];

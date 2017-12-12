@@ -156,8 +156,6 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Services\BluetoothManager.cs" />
-    <Compile Include="Services\PerkyCBCentralManagerDelegate.cs" />
-    <Compile Include="Services\PerkyPeripheralDelegate.cs" />
     <Compile Include="Notifications\PerkyNotificationCenterDelegate.cs" />
     <Compile Include="Services\NotificationManager.cs" />
   </ItemGroup>

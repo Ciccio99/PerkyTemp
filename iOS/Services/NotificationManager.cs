@@ -1,4 +1,7 @@
-﻿using System;
+﻿/*
+    Notification manager for IOS
+*/
+using System;
 using PerkyTemp.Interfaces;
 using UserNotifications;
 using PerkyTemp.iOS.Notifications;
@@ -54,7 +57,9 @@ namespace PerkyTemp.iOS.Services {
             
             var requests = new string[] { requestID };
             UNUserNotificationCenter.Current.RemovePendingNotificationRequests (requests);
+            UNUserNotificationCenter.Current.RemoveDeliveredNotifications (requests);
         }
+
 
         /// <summary>
         /// Removes all pending notifications.

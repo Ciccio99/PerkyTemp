@@ -1,5 +1,5 @@
 ﻿/*
- * Singleton TemperatureSensor
+ * Singleton TemperatureSensor used to manage when a sensor has pushed new temperature data
  */
 using System;
 namespace PerkyTemp.Models {

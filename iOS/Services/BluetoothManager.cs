@@ -1,4 +1,7 @@
-﻿using System;
+﻿/*
+    Bluetooth manager for IOS
+*/
+using System;
 using CoreBluetooth;
 using CoreFoundation;
 using PerkyTemp.Interfaces;
@@ -15,17 +18,14 @@ using UIKit;
 namespace PerkyTemp.iOS.Services {
     public class BluetoothManager : IBluetoothManager {
 
-        private PerkyCBCentralManagerDelegate _managerDel;
         private CBCentralManager _centralManager;
         private CBPeripheral _activePeripheral;
         private bool _timerRunning;
 
         public BluetoothManager () {
-            _managerDel = new PerkyCBCentralManagerDelegate ();
             _centralManager = new CBCentralManager ();
             _centralManager.UpdatedState += OnUpdatedState;
             _centralManager.DiscoveredPeripheral += OnDiscoveredPeripheral;
-            _centralManager.ConnectedPeripheral += OnPeripheralConnected;
         }
 
         public string Test () {
@@ -33,21 +33,10 @@ namespace PerkyTemp.iOS.Services {
         }
 
         /// <summary>
-        /// On peripheral connected.
+        /// Method subscribed to a CBMCentralManager's Update state event
         /// </summary>
-        /// <param name="sender">Sender.</param>
+        /// <param name="s">S.</param>
         /// <param name="e">E.</param>
-        public void OnPeripheralConnected (Object sender, CBPeripheralEventArgs e) {
-            _activePeripheral = e.Peripheral;
-            Debug.WriteLine ("Connected to " + _activePeripheral.Name);
-
-            if (_activePeripheral.Delegate == null) {
-                _activePeripheral.Delegate = new PerkyPeripheralDelegate ();
-
-                _activePeripheral.DiscoverServices ();
-            }
-        }
-
         public void OnUpdatedState (Object s, EventArgs e) {
             if (_centralManager.State == CBCentralManagerState.PoweredOn) {
                 if (!_centralManager.IsScanning)
@@ -59,6 +48,11 @@ namespace PerkyTemp.iOS.Services {
             }
         }
 
+        /// <summary>
+        /// Method subscribed to a CBMCentralManager's OnDiscoveredPeripheral Event
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
         private void OnDiscoveredPeripheral (Object sender, CBDiscoveredPeripheralEventArgs e) {
             var peripheral = e.Peripheral;
 
@@ -87,12 +81,18 @@ namespace PerkyTemp.iOS.Services {
             }
         }
        
+        /// <summary>
+        /// Called when a scanning phase timesout with no temperature sensor found
+        /// </summary>
         private void OnScanTimeout () {
             Debug.WriteLine ("Stopping Scan for devices");
             _centralManager?.StopScan ();
             InitTimerNextScan ();
         }
 
+        /// <summary>
+        /// Scans for temperature sensor.
+        /// </summary>
         public void ScanForTemperatureSensor () {
             if (_centralManager.IsScanning) {
                 return;
@@ -112,6 +112,11 @@ namespace PerkyTemp.iOS.Services {
             timer.Start ();
         }
 
+        /// <summary>
+        /// Sets the active peripheral.
+        /// </summary>
+        /// <param name="peripheral">Peripheral.</param>
+        /// <param name="temperature">Temperature.</param>
         private void _SetActivePeripheral (CBPeripheral peripheral, string temperature) {
             Debug.WriteLine ("Setting active peripheral... " + peripheral.Identifier);
             _activePeripheral = peripheral;
@@ -125,6 +130,9 @@ namespace PerkyTemp.iOS.Services {
             InitTimerNextScan ();
         }
 
+        /// <summary>
+        /// Inits the timer for the next scan phase.
+        /// </summary>
         private void InitTimerNextScan () {
             if (_timerRunning == true) return;
 

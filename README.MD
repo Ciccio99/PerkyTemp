@@ -1,12 +1,15 @@
 # PerkyTemp
 
-## BLE Temperature Monitoring App
+## BLE Temperature Monitoring iOS App
 
 ## Team
 
 - Jake Hartz
 - Alberto Scicali
 - Mitul Sheth
+
+# Usage
+- Run on iOS platform with iOS 10 or greater installed
 
 ## Goal 
 

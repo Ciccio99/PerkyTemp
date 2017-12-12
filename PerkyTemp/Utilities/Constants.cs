@@ -1,4 +1,6 @@
-﻿using System;
+﻿/*
+    Class that maintains constants that are used throughout the app
+*/
 namespace PerkyTemp.Utilities {
     public static class Constants {
 

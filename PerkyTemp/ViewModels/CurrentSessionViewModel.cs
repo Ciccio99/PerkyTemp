@@ -125,11 +125,17 @@ namespace PerkyTemp.ViewModels {
             }
         }
 
+        /// <summary>
+        /// Toggles the temperature conversion.
+        /// </summary>
         public void ToggleTemperatureConversion () {
             _isFahrenheit = !_isFahrenheit;
             OnTemperatureChanged ();
         }
 
+        /// <summary>
+        /// On the temperature changed, calls the necessary OnPropertyChange functions
+        /// </summary>
         private void OnTemperatureChanged () {
             OnPropertyChanged (nameof (CurrentTemp));
             OnPropertyChanged (nameof (ConvertText));

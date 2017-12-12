@@ -1,14 +1,26 @@
-﻿using System;
+﻿/*
+    Utilities static class that maintains helper functions
+*/
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Diagnostics;
 
 namespace PerkyTemp.Utilities {
     public static class Utilities {
+        /// <summary>
+        /// Celsius to fahrenheit.
+        /// </summary>
+        /// <returns>The to fahrenheit.</returns>
+        /// <param name="temp">Temperature in Celsius</param>
         public static float CelsiusToFahrenheit (float temp) {
             return (temp * 9f / 5f) + 32f;
         }
 
+        /// <summary>
+        /// Converts the given Bluetotth hexstring and converts it to a temperature float in celsius
+        /// </summary>
+        /// <returns>The hex to temperature.</returns>
+        /// <param name="hexInput">Hex input.</param>
         public static float StringHexToTemperature (string hexInput) {
             // Clean input
             hexInput = Regex.Replace (hexInput, "[ ,|']", "[]");
@@ -20,20 +32,6 @@ namespace PerkyTemp.Utilities {
             float tempf = (float) temperatureValue / 100f;
 
             return tempf;
-        }
-
-        public static float ExtractTemperatureFromChars (char[] hexChars) {
-            if (hexChars.Length < 2)
-                throw new ArgumentException ("hexChars must contains at least 2 chars...");
-            
-            char val1 = hexChars[hexChars.Length - 1];
-            char val2 = hexChars[hexChars.Length - 2];
-            int num1 = Convert.ToInt32 (val1);
-            int num2 = Convert.ToInt32 (val2);
-
-            float temperature = num1 + val2 / 100f;
-
-            return temperature;
         }
 
         public static string[] SplitInParts(String s, int partLength) {

@@ -12,6 +12,16 @@
 
 Run on the iOS platform with iOS 10 or greater installed.
 
+## How to deploy
+- May need to use free provisioning to deploy the app to an iOS 10+ device
+    - Look here for how to do it (https://developer.xamarin.com/guides/ios/getting_started/installation/device_provisioning/free-provisioning/)
+- In the `info.plist` under the `PerkyTemp.iOS` folder, set your bundle identifier to the one you created in the previous Free Provisioning step.
+    - ![alt text](/Pics/infoplistImage.png "info.plist image")
+- Plug in your iOS device via USB cable, and in visual studio select the debug device to be your iOS device.
+    - ![alt text](/Pics/debugSelection1.png "debug selection")
+    - ![alt text](/Pics/debugDeviceSelection.png "Sebug device selection")
+- Once your device is selected, make sure it is unlocked and press the Play button in visual studio to deploy the app to your device.
+
 
 # Goal 
 

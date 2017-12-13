@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
+    <DefineConstants>DEBUG;__MOBILE__;__IOS__;__ANDROID__;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -41,7 +41,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IFileHelper.cs" />
+    <Compile Include="Models\CurrentSession.cs" />
     <Compile Include="Models\PerkyTempDatabase.cs" />
+    <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="PerkyTempPage.xaml.cs">
       <DependentUpon>PerkyTempPage.xaml</DependentUpon>
     </Compile>
@@ -60,6 +63,10 @@
     <Compile Include="Interfaces\IBluetoothManager.cs" />
     <Compile Include="ViewModels\CurrentSessionViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Models\TemperatureSensor.cs" />
+    <Compile Include="Utilities\Utilities.cs" />
+    <Compile Include="Utilities\Constants.cs" />
+    <Compile Include="Interfaces\INotificationManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SQLite-net, Version=1.4.118.0, Culture=neutral, processorArchitecture=MSIL">

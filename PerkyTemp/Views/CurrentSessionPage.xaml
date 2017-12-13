@@ -5,13 +5,42 @@
              x:Class="PerkyTemp.Views.CurrentSessionPage"
              Title="Current Session">
     <ContentPage.BindingContext>
-        <ViewModels:CurrentSessionViewModel/>
+        <ViewModels:CurrentSessionViewModel x:Name="TheViewModel" />
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
-            <StackLayout>
-                <Label Text="This is CurrentSessionPage" />
-                <Label Text="{Binding Log}" />
-            </StackLayout>
+        <StackLayout BackgroundColor="White">
+            <Grid BackgroundColor="#36AFC5" Padding="8,0,8,0" HeightRequest="40">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="33*" />
+                    <ColumnDefinition Width="33*" />
+                    <ColumnDefinition Width="33*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Label Text="PerkyTemp" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" HeightRequest="40" Grid.Column="1" TextColor="#FFFFFF" BackgroundColor="#36AFC5" FontSize="Large" FontAttributes="Bold"/>
+                <Label x:Name="TemperatureConversionLabel" Text="{Binding OppositeConvertText}" Grid.Column="2" HeightRequest="40" VerticalTextAlignment="Center" HorizontalTextAlignment="End" TextColor="#6A57EF" FontSize="24" FontAttributes="Bold"/>
+            </Grid>
+             
+            
+            <Grid Margin="0,15,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Label Text="{Binding CurrentTemp}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" LineBreakMode="NoWrap" FontSize="32" FontAttributes="Bold" TextColor="#2C5C65" Grid.Row="0" Grid.Column="1"/>
+                <Label Text="{Binding ConvertText}" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="24" TextColor="#2C5C65" Grid.Row="0" Grid.Column="2"/>
+            </Grid>
+
+            <Button x:Name="Btn" Text="{Binding ButtonText}" FontSize="Large" FontAttributes="Bold" Clicked="Btn_Clicked" />
+            <Label Text="{Binding Status}" FontSize="Medium" />
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

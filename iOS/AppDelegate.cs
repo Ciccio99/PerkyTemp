@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
 using Foundation;
 using UIKit;
+using UserNotifications;
+using PerkyTemp.iOS.Notifications;
 
 namespace PerkyTemp.iOS
 {
@@ -15,6 +14,15 @@ namespace PerkyTemp.iOS
             global::Xamarin.Forms.Forms.Init();
 
             LoadApplication(new App());
+
+            // Notifications check
+            UNUserNotificationCenter.Current.GetNotificationSettings ((settings) => {
+                var alertsAllowed = (settings.AlertSetting == UNNotificationSetting.Enabled);
+                if (!alertsAllowed) {
+                    UNUserNotificationCenter.Current.RequestAuthorization (UNAuthorizationOptions.Alert, (approved, err) => {
+                    });
+                }
+            });
 
             return base.FinishedLaunching(app, options);
         }

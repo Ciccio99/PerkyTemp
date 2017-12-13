@@ -17,6 +17,10 @@ namespace PerkyTemp.Views
         public HistoryPage ()
 		{
 			InitializeComponent ();
+            this.BackgroundColor = Color.FromHex ("#36AFC5");
+#if __IOS__
+            Padding = new Thickness (0, 25, 0, 0);
+#endif
 		}
     }
 }

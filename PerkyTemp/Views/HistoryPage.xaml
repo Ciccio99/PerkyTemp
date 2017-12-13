@@ -1,20 +1,34 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ViewModels="clr-namespace:PerkyTemp.ViewModels;assembly=PerkyTemp"
              x:Class="PerkyTemp.Views.HistoryPage"
              Title="History">
     <ContentPage.BindingContext>
-        <ViewModels:HistoryViewModel />
+        <ViewModels:HistoryViewModel x:Name="TheViewModel" />
     </ContentPage.BindingContext>
     
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Past Sessions:" FontSize="Large" FontAttributes="Bold" />
-
-            <Grid>
+        <StackLayout BackgroundColor="White">
+            <!--   Top Title border      -->
+             <Grid BackgroundColor="#36AFC5" Padding="8,0,8,0" HeightRequest="40">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="33*" />
+                    <ColumnDefinition Width="33*" />
+                    <ColumnDefinition Width="33*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Label Text="PerkyTemp" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" HeightRequest="40" Grid.Column="1" TextColor="#FFFFFF" BackgroundColor="#36AFC5" FontSize="Large" FontAttributes="Bold"/>
+            </Grid>
+            <!---->
+
+            <Label Text="History" FontSize="32" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" FontAttributes="Bold" TextColor="#2C5C65" Margin="8,5,8,0"/>
+
+            <Grid Padding="8,0,8,0" Margin="0,14,0,8">
+                <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="1*" />
@@ -24,20 +38,18 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <Label Text="ID" Grid.Row="0" Grid.Column="0" FontSize="Medium" />
-                <Label Text="Start Time" Grid.Row="0" Grid.Column="1" FontSize="Medium" />
-                <Label Text="Duration" Grid.Row="0" Grid.Column="2" FontSize="Medium" />
-                <Label Text="Start Temp" Grid.Row="0" Grid.Column="3" FontSize="Medium" />
-                <Label Text="Final Temp" Grid.Row="0" Grid.Column="4" FontSize="Medium" />
+                <Label Text="Start Time" Grid.Row="0" Grid.Column="0" FontSize="Medium" TextColor="#afafaf" FontAttributes="Bold" />
+                <Label Text="Duration" Grid.Row="0" Grid.Column="1" FontSize="Medium" TextColor="#afafaf" FontAttributes="Bold"/>
+                <Label Text="Start Temp" Grid.Row="0" Grid.Column="2" FontSize="Medium" TextColor="#afafaf" FontAttributes="Bold"/> 
+                <Label Text="Final Temp" Grid.Row="0" Grid.Column="3" FontSize="Medium" TextColor="#afafaf" FontAttributes="Bold"/>
             </Grid>
 
             <ListView ItemsSource="{Binding Sessions}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid>
+                            <Grid Padding="8,2,8,2">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
                                     <ColumnDefinition Width="2*" />
                                     <ColumnDefinition Width="2*" />
                                     <ColumnDefinition Width="1*" />
@@ -47,11 +59,10 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
 
-                                <Label Text="{Binding ID}" Grid.Row="0" Grid.Column="0" FontSize="Medium" />
-                                <Label Text="{Binding Date}" Grid.Row="0" Grid.Column="1" FontSize="Medium" />
-                                <Label Text="{Binding DurationString}" Grid.Row="0" Grid.Column="2" FontSize="Medium" />
-                                <Label Text="{Binding StartTemp}" Grid.Row="0" Grid.Column="3" FontSize="Medium" />
-                                <Label Text="{Binding FinalTemp}" Grid.Row="0" Grid.Column="4" FontSize="Medium" />
+                                <Label Text="{Binding Date}" Grid.Row="0" Grid.Column="0" FontSize="Medium" />
+                                <Label Text="{Binding DurationString}" Grid.Row="0" Grid.Column="1" FontSize="Medium" />
+                                <Label Text="{Binding StartTemp}" Grid.Row="0" Grid.Column="2" FontSize="Medium" />
+                                <Label Text="{Binding FinalTemp}" Grid.Row="0" Grid.Column="3" FontSize="Medium" />
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

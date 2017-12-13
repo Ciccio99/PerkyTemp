@@ -39,8 +39,8 @@
                 <Label Text="{Binding ConvertText}" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="24" TextColor="#2C5C65" Grid.Row="0" Grid.Column="2"/>
             </Grid>
 
-            <Button x:Name="Btn" Text="{Binding ButtonText}" FontSize="Large" FontAttributes="Bold" Clicked="Btn_Clicked" />
-            <Label Text="{Binding Status}" FontSize="Medium" />
+            <Button x:Name="Btn" Text="{Binding ButtonText}" FontSize="Large" FontAttributes="Bold" TextColor="#6A57EF" Clicked="Btn_Clicked" Margin="0,20, 0, 10"/>
+            <Label Text="{Binding Status}" FontSize="Large" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" Margin="8,0,8,0"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

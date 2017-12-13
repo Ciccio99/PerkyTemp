@@ -73,11 +73,11 @@ namespace PerkyTemp.ViewModels {
                     // If less than 30 secs, say "vest has expired"
                     if (timeRemaining < 30.0)
                     {
-                        msg += "; vest has EXPIRED";
+                        msg += "\n vest has EXPIRED";
                     }
                     else
                     {
-                        msg += "; vest will expire in " + Math.Round(TimeSpan.FromSeconds(timeRemaining.Value).TotalMinutes) + " minutes";
+                        msg += "\n vest will expire in " + Math.Round(TimeSpan.FromSeconds(timeRemaining.Value).TotalMinutes) + " minutes";
                     }
                 }
                 return msg;

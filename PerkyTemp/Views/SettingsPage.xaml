@@ -39,7 +39,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <Entry FontSize="Large" Grid.Row="0" Grid.Column="0" Text="{Binding NotificationTime, Mode=TwoWay}" Keyboard="Text" />
+                <Entry FontSize="Large" Grid.Row="0" Grid.Column="0" Text="{Binding NotificationTime, Mode=TwoWay}" Keyboard="Numeric" />
                 <Label Text="mins" FontSize="Large" HorizontalTextAlignment="Start" LineBreakMode="NoWrap" Grid.Row="0" Grid.Column="1" />
             </Grid>
 

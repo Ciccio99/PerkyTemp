@@ -11,6 +11,11 @@ namespace UnitTests
 {
     class Program
     {
+        /// <summary>
+        /// Simple unit tests for the linear regression in the CurrentSession
+        /// model.
+        /// </summary>
+        /// <see cref="CurrentSession"/>
         static void Main(string[] args)
         {
             Console.WriteLine("Testing linear regression...");

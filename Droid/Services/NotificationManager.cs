@@ -6,6 +6,10 @@ using Android.App;
 
 [assembly: Dependency (typeof (PerkyTemp.Droid.Services.NotificationManager))]
 namespace PerkyTemp.Droid.Services {
+    /// <summary>
+    /// Android implementation of NotificationManager.
+    /// </summary>
+    /// <see cref="INotificationManager"/>
     public class NotificationManager : INotificationManager {
         public NotificationManager () {
         }

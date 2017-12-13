@@ -5,6 +5,9 @@ using PerkyTemp.Interfaces;
 using PerkyTemp.Models;
 
 namespace PerkyTemp.ViewModels {
+    /// <summary>
+    /// A ViewModel for CurrentSessionPage.
+    /// </summary>
     public class CurrentSessionViewModel : INotifyPropertyChanged {
         private CurrentSession currentSession = null;
         private IBluetoothManager _bluetoothManager;
@@ -12,6 +15,10 @@ namespace PerkyTemp.ViewModels {
         private string _currentSessionNotificationID;
         private bool _isFahrenheit;
 
+        /// <summary>
+        /// The current temperature, as should be shown in the UI. This will
+        /// return "Scanning" if no temperature data has yet been found.
+        /// </summary>
         public string CurrentTemp
         {
             get {
@@ -25,19 +32,34 @@ namespace PerkyTemp.ViewModels {
             }
         }
 
+        /// <summary>
+        /// The text to show on the Start/Stop Session button.
+        /// </summary>
         public string ButtonText
         {
             get => currentSession == null ? "Start Session" : "Stop Session";
         }
 
+        /// <summary>
+        /// The text to show on the fahrenheit/celsius toggle button.
+        /// </summary>
         public string ConvertText {
             get => TemperatureSensor.Instance.UUID != null ? (_isFahrenheit ? "°F" : "°C") : "";
         }
 
+        /// <summary>
+        /// The opposite of ConvertText.
+        /// </summary>
         public string OppositeConvertText {
             get => _isFahrenheit ? "°C" : "°F";
         }
 
+        /// <summary>
+        /// The current status of the session, if one has been started. This
+        /// will include the session duration (so far) and either the time
+        /// remaining until the vest expires or a message that the vest has
+        /// expired.
+        /// </summary>
         public string Status
         {
             get
@@ -69,6 +91,9 @@ namespace PerkyTemp.ViewModels {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /// <summary>
+        /// Handler for when the database is updated.
+        /// </summary>
         public void OnDatabaseUpdated()
         {
             OnPropertyChanged(nameof(Status));
@@ -83,6 +108,9 @@ namespace PerkyTemp.ViewModels {
             PerkyTempDatabase.Database.AddDatabaseChangeListener(OnDatabaseUpdated);
         }
 
+        /// <summary>
+        /// Button handler to start or stop the current session.
+        /// </summary>
         public void StartOrStopCurrentSession()
         {
             if (currentSession != null)
@@ -97,6 +125,9 @@ namespace PerkyTemp.ViewModels {
             OnPropertyChanged(nameof(Status));
         }
 
+        /// <summary>
+        /// Start a new current session.
+        /// </summary>
         private void StartCurrentSession()
         {
             currentSession = new CurrentSession();
@@ -105,6 +136,9 @@ namespace PerkyTemp.ViewModels {
             RescheduleNotification();
         }
 
+        /// <summary>
+        /// Stop the currently running current session.
+        /// </summary>
         private void StopCurrentSession()
         {
             PastSession maybePastSession = currentSession.EndSession();
@@ -145,6 +179,10 @@ namespace PerkyTemp.ViewModels {
             RescheduleNotification();
         }
 
+        /// <summary>
+        /// Schedule a new notification for when the vest expires. This will
+        /// also cancel any existing notifications.
+        /// </summary>
         private void RescheduleNotification()
         {
             if (_currentSessionNotificationID != null)

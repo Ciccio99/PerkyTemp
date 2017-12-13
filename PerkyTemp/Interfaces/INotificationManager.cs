@@ -1,5 +1,10 @@
 ﻿using System;
 namespace PerkyTemp.Interfaces {
+    /// <summary>
+    /// Interface for cross-platform (iOS and Android) notifications. This
+    /// should have a concrete implementation for each platform. The correct
+    /// implementation will be chosen via Xamarin's dependency injection.
+    /// </summary>
     public interface INotificationManager {
         /// <summary>
         /// Schedules the notification.

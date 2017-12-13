@@ -8,13 +8,37 @@ using static PerkyTemp.Utilities.Utilities;
 
 namespace PerkyTemp.Models
 {
+    /// <summary>
+    /// Model representing the current session. Temperature readings over time
+    /// should be sent to this model so it can accurately predict remaining
+    /// cooling time.
+    /// </summary>
     public class CurrentSession
     {
+        /// <summary>
+        /// The Unix timestamp that other Unix timestamps are relative to (this
+        /// makes debugging the linear regression easier).
+        /// </summary>
         private static readonly double BASE_TIME = DateTimeToUnixTimestamp(DateTime.Now);
 
+        /// <summary>
+        /// The time at which the session was started.
+        /// </summary>
         public DateTime StartTime { get; private set; }
+
+        /// <summary>
+        /// The first temperature recorded for the session.
+        /// </summary>
         public float? FirstTemp { get; private set; }
+
+        /// <summary>
+        /// The most recent temperature recorded for the session.
+        /// </summary>
         public float? LatestTemp { get; private set; }
+
+        /// <summary>
+        /// All the recorded temperature readings for this session.
+        /// </summary>
         public Dictionary<DateTime, float> TempReadings { get; private set; }
 
         public CurrentSession()
@@ -23,6 +47,10 @@ namespace PerkyTemp.Models
             StartTime = DateTime.Now;
         }
 
+        /// <summary>
+        /// Record a new temperature reading for this session, associated with
+        /// the current time.
+        /// </summary>
         public void RecordTempReading(float temp)
         {
             TempReadings[DateTime.Now] = temp;
@@ -32,7 +60,8 @@ namespace PerkyTemp.Models
 
         /// <summary>
         /// Convert this CurrentSession into a PastSession.
-        /// If we have not had at least 2 temperature readings, this will return null.
+        /// If we have not had at least 2 temperature readings, this will
+        /// return null.
         /// </summary>
         public PastSession EndSession()
         {
@@ -42,21 +71,21 @@ namespace PerkyTemp.Models
         }
 
         /// <summary>
-        /// Get the amount of remaining time for the vest, in seconds, if available
+        /// Get the amount of remaining time for the vest, in seconds, if
+        /// available.
         /// </summary>
-        /// <returns></returns>
         public double? GetTimeRemainingSec()
         {
             // If we've only had one temperature reading, we can't predict yet
             if (TempReadings.Count < 2) return null;
 
-            double threshold = PerkyTempDatabase.Database.GetSettings().TemperatureThreshold;
+            double thresholdTemp = PerkyTempDatabase.Database.GetSettings().TemperatureThreshold;
 
             // Perform linear regression on the current temp data
             LinearRegression(DateTimeDictToDoublePairs(TempReadings), out double m, out double b);
 
-            // At what timestamp will we be at temperature "threshold"?
-            double thresholdTime = (threshold - b) / m + BASE_TIME;
+            // At what timestamp will we be at temperature "thresholdTemp"?
+            double thresholdTime = (thresholdTemp - b) / m + BASE_TIME;
 
             // If that's more than 10 days in the future, assume that we have bad data
             if (thresholdTime > DateTimeToUnixTimestamp(DateTime.Now + TimeSpan.FromDays(10)))
@@ -64,9 +93,15 @@ namespace PerkyTemp.Models
                 return null;
             }
 
+            // Make sure we don't return a negative time remaining
             return Math.Max(0.0, thresholdTime - DateTimeToUnixTimestamp(DateTime.Now));
         }
 
+        /// <summary>
+        /// Convert a dictionary mapping DateTimes to floats to an enumerable
+        /// of doubles to doubles (where the doubles are seconds relative to
+        /// BASE_TIME).
+        /// </summary>
         private static IEnumerable<KeyValuePair<double, double>> DateTimeDictToDoublePairs(Dictionary<DateTime, float> d)
         {
             foreach (var keyval in d)
@@ -76,7 +111,8 @@ namespace PerkyTemp.Models
         }
 
         /// <summary>
-        /// Compute the linear regression y=mx+b using least-squares regression.
+        /// Compute the linear regression y=mx+b using least-squares
+        /// regression.
         /// </summary>
         public static void LinearRegression(IEnumerable<KeyValuePair<double, double>> points,
                                       out double m, out double b)

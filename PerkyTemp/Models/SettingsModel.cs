@@ -17,6 +17,10 @@ namespace PerkyTemp.Models
     {
         public const int DEFAULT_ID = 1;
         
+        /// <summary>
+        /// Key of the SettingsModel in the settings table in the database.
+        /// This will always be DEFAULT_ID if being stored in SQLite.
+        /// </summary>
         [PrimaryKey]
         public int ID { get; private set; }
 

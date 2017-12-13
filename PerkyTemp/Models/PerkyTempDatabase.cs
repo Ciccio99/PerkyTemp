@@ -19,6 +19,9 @@ namespace PerkyTemp.Models
     {
         private static PerkyTempDatabase instance;
 
+        /// <summary>
+        /// Get the singleton instance of PerkyTempDatabase.
+        /// </summary>
         public static PerkyTempDatabase Database
         {
             get
@@ -34,20 +37,36 @@ namespace PerkyTemp.Models
         private SQLiteConnection conn;
         private bool _inited = false;
 
+        /// <summary>
+        /// A mock SettingsModel to use instead of the real one. Usefu lfor
+        /// unit tests.
+        /// </summary>
         public SettingsModel MockedSettingsForTesting { get; set; }
-
+        
         public delegate void DatabaseChange();
+        /// <summary>
+        /// An event that will be invoked whenever there is a change to the
+        /// database contents.
+        /// </summary>
         public event DatabaseChange DatabaseChangeListeners;
 
-        private PerkyTempDatabase()
-        {
-        }
+        /// <summary>
+        /// Private constructor (to enforce use of the singleton instance).
+        /// </summary>
+        private PerkyTempDatabase() { }
 
+        /// <summary>
+        /// Add a new listener to the DatabaseChangeListeners event.
+        /// </summary>
+        /// <param name="listener"></param>
         public void AddDatabaseChangeListener(DatabaseChange listener)
         {
             DatabaseChangeListeners += listener;
         }
 
+        /// <summary>
+        /// Initialize the database if using it for the first time.
+        /// </summary>
         private void InitDatabase()
         {
             if (_inited) return;
@@ -58,6 +77,9 @@ namespace PerkyTemp.Models
             _inited = true;
         }
 
+        /// <summary>
+        /// Get all the PastSessions stored in the database.
+        /// </summary>
         public List<PastSession> GetSessions()
         {
             InitDatabase();
@@ -65,6 +87,10 @@ namespace PerkyTemp.Models
             return conn.Table<PastSession>().Reverse().ToList();
         }
 
+        /// <summary>
+        /// Save a new PastSession or update an existing PastSession in the
+        /// database.
+        /// </summary>
         public int SaveSession(PastSession session)
         {
             InitDatabase();
@@ -82,6 +108,10 @@ namespace PerkyTemp.Models
             return retval;
         }
 
+        /// <summary>
+        /// Get the latest SettingsModel from the database (or using the mock
+        /// specified with MockedSettingsForTesting).
+        /// </summary>
         public SettingsModel GetSettings()
         {
             if (MockedSettingsForTesting != null)
@@ -98,6 +128,9 @@ namespace PerkyTemp.Models
             return conn.Get<SettingsModel>(SettingsModel.DEFAULT_ID);
         }
 
+        /// <summary>
+        /// Store an updated SettingsModel in the database.
+        /// </summary>
         public void SaveSettings(SettingsModel settings)
         {
             InitDatabase();

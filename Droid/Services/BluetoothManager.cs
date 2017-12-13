@@ -7,8 +7,8 @@ using System.Diagnostics;
 namespace PerkyTemp.Droid.Services
 {
     /// <summary>
-    /// TODO: Implement this for Android (see the interface for a description
-    /// of what it should be doing).
+    /// TODO: Implement this for Android (see the IBluetoothManager interface
+    /// for a description of what it should be doing).
     /// </summary>
     public class BluetoothManager : IBluetoothManager
     {

@@ -1,7 +1,7 @@
-﻿/*
-    Class that maintains constants that are used throughout the app
-*/
-namespace PerkyTemp.Utilities {
+﻿namespace PerkyTemp.Utilities {
+    /// <summary>
+    /// Class that maintains constants that are used throughout the app.
+    /// </summary>
     public static class Constants {
 
         // BLE consts

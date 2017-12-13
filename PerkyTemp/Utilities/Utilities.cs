@@ -1,11 +1,11 @@
-﻿/*
-    Utilities static class that maintains helper functions
-*/
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace PerkyTemp.Utilities {
+    /// <summary>
+    /// Static class that maintains helper functions.
+    /// </summary>
     public static class Utilities {
         /// <summary>
         /// Celsius to fahrenheit.
@@ -49,11 +49,17 @@ namespace PerkyTemp.Utilities {
             return stringSplits.ToArray ();
         }
 
+        /// <summary>
+        /// Convert a DateTime to a Unix timestamp.
+        /// </summary>
         public static double DateTimeToUnixTimestamp(DateTime dt)
         {
             return (dt - new DateTime(1970, 1, 1)).TotalSeconds;
         }
 
+        /// <summary>
+        /// Convert a Unix timestamp to a DateTime.
+        /// </summary>
         public static DateTime UnixTimestampToDateTime(double ts)
         {
             return new DateTime(1970, 1, 1) + TimeSpan.FromSeconds(ts);

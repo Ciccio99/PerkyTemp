@@ -1,7 +1,4 @@
-﻿/*
-    Notification manager for IOS
-*/
-using System;
+﻿using System;
 using PerkyTemp.Interfaces;
 using UserNotifications;
 using PerkyTemp.iOS.Notifications;
@@ -10,6 +7,10 @@ using UIKit;
 
 [assembly: Dependency (typeof (PerkyTemp.iOS.Services.NotificationManager))]
 namespace PerkyTemp.iOS.Services {
+    /// <summary>
+    /// iOS implementation of INotificationManager.
+    /// </summary>
+    /// <see cref="INotificationManager"/>
     public class NotificationManager : INotificationManager {
 
         public NotificationManager () {

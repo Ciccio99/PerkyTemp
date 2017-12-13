@@ -9,10 +9,16 @@ using System.Threading.Tasks;
 
 namespace PerkyTemp.ViewModels
 {
+    /// <summary>
+    /// A ViewModel for HistoryPage.
+    /// </summary>
     class HistoryViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// The list of PastSessions that should be shown in the history list.
+        /// </summary>
         public List<PastSession> Sessions { get => PerkyTempDatabase.Database.GetSessions(); }
 
         public HistoryViewModel()
@@ -25,6 +31,9 @@ namespace PerkyTemp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /// <summary>
+        /// A handler for when the database has changed.
+        /// </summary>
         public void OnDatabaseUpdated()
         {
             OnPropertyChanged(nameof(Sessions));

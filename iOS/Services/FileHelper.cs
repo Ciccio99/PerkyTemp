@@ -6,8 +6,16 @@ using Xamarin.Forms;
 [assembly: Dependency(typeof(PerkyTemp.iOS.Services.FileHelper))]
 namespace PerkyTemp.iOS.Services
 {
+    /// <summary>
+    /// iOS implementation of IFileHelper.
+    /// </summary>
+    /// <see cref="IFileHelper"/>
     public class FileHelper : IFileHelper
     {
+        /// <summary>
+        /// Android implementation of GetFileLocalPath.
+        /// </summary>
+        /// <see cref="IFileHelper.GetLocalFilePath(string)"/>
         public string GetLocalFilePath(string filename)
         {
             string docFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);

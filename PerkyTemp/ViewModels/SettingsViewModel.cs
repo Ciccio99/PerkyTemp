@@ -17,6 +17,11 @@ namespace PerkyTemp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /// <summary>
+        /// The time (in minutes) to notify the user before their vest expires.
+        /// This corresponds to the "NotificationTime" setting in
+        /// SettingsModel.
+        /// </summary>
         public double NotificationTime
         {
             get => PerkyTempDatabase.Database.GetSettings().NotificationTime;
@@ -29,6 +34,10 @@ namespace PerkyTemp.ViewModels
             }
         }
 
+        /// <summary>
+        /// The threshold at which the vest is no longer effective. This
+        /// corresponds to the "TemperatureThreshold" setting in SettingsModel.
+        /// </summary>
         public float TemperatureThreshold
         {
             get => PerkyTempDatabase.Database.GetSettings().TemperatureThreshold;

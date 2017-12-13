@@ -1,7 +1,4 @@
-﻿/*
-    Bluetooth manager for IOS
-*/
-using System;
+﻿using System;
 using CoreBluetooth;
 using CoreFoundation;
 using PerkyTemp.Interfaces;
@@ -16,6 +13,10 @@ using UIKit;
 
 [assembly: Dependency (typeof (PerkyTemp.iOS.Services.BluetoothManager))]
 namespace PerkyTemp.iOS.Services {
+    /// <summary>
+    /// iOS implementation of IBluetoothManager.
+    /// </summary>
+    /// <see cref="IBluetoothManager"/>
     public class BluetoothManager : IBluetoothManager {
 
         private CBCentralManager _centralManager;
